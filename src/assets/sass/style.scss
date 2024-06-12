@@ -1,0 +1,109 @@
+@import "bootstrap";
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background-color: $background-color;
+  color: $main-color;
+  font-family: $font-family;
+  overflow-x: hidden;
+
+  * {
+    font-family: $font-family;
+  }
+
+  #app {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+//noinspection CssUnusedSymbol
+.button {
+  user-select: none;
+  cursor: pointer;
+  border: 0;
+}
+
+.not-highlight {
+  user-select: none;
+}
+
+//noinspection CssUnusedSymbol
+.not-touchable {
+  pointer-events: none;
+}
+
+.important {
+  color: $important-color;
+}
+
+//noinspection CssUnusedSymbol
+.btn-u {
+  @extend .btn;
+  color: $main-color;
+  background-color: $second-color;
+  border-radius: 10px;
+  font-weight: bold;
+  width: 100%;
+
+  &:hover {
+    color: $main-color;
+    background-color: lighten($second-color, 15%);
+  }
+
+  @media (min-width: 1920px) {
+    border-radius: 0.6vw;
+  }
+}
+
+.h1 {
+  font-size: calc(2rem + 0.6vw);
+}
+
+.h2 {
+  font-size: calc(1.7rem + 0.8vw);
+}
+
+.h3 {
+  font-size: calc(1.5rem + 0.5vw);
+}
+
+.h4 {
+  font-size: calc(1.3rem + 0.4vw);
+}
+
+.h5 {
+  font-size: calc(1.1rem + 0.5vw);
+}
+
+.h6 {
+  font-size: calc(1.1rem + 0.3vw);
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateX(0);
+}
