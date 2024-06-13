@@ -7,6 +7,10 @@ $second-color: #346450;
 $third-color: black;
 $important-color: #dc3545;
 
+$notify-info: #f2ecde;
+$notify-success: green;
+$notify-error: red;
+
 //Данные шапки
 $header-main-color: white;
 $header-second-color: #346450;
@@ -78,3 +82,20 @@ $ships-v: (
 }
 
 
+// Функция для вычисления относительной яркости
+@function luminance($color) {
+  $r: red($color) / 255;
+  $g: green($color) / 255;
+  $b: blue($color) / 255;
+
+  $r: if($r <= 0.03928, $r / 12.92, pow(($r + 0.055) / 1.055, 2.4));
+  $g: if($g <= 0.03928, $g / 12.92, pow(($g + 0.055) / 1.055, 2.4));
+  $b: if($b <= 0.03928, $b / 12.92, pow(($b + 0.055) / 1.055, 2.4));
+
+  @return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+}
+
+// Функция для определения контрастного цвета текста
+@function text-color($background-color) {
+  @return if(luminance($background-color) > 0.179, #000000, #ffffff);
+}

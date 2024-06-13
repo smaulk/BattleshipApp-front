@@ -32,7 +32,10 @@
       ],
       "components/*": [
         "./src/components/*"
-      ]
+      ],
+      "views/*": [
+        "./src/views/*"
+      ],
     }
     },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],

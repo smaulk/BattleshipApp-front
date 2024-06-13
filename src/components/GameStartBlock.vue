@@ -44,7 +44,7 @@ const startGameClick = () => {
       >
         <div class="col-10 col-sm-8 col-xl-9">
           <button
-              class="btn-u start-game-btn"
+              class="btn-u btn-start-game"
               @click="startGameClick"
           >
             Начать игру
@@ -68,7 +68,7 @@ const startGameClick = () => {
 </template>
 
 <style lang="scss" scoped>
-.start-game-btn {
+.btn-start-game {
   padding: calc(var(--game-grid-cell-size) / 4);
   font-size: calc(1.1rem + 0.5vw);
 }

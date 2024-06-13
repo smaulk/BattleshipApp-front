@@ -12,6 +12,7 @@ export default defineConfig({
       '~bootstrap': 'bootstrap',
       "assets": '/src/assets',
       "components": '/src/components',
+      "views": '/src/views',
     }
   },
   css: {

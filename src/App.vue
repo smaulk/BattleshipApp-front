@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import AppHeader from "components/AppHeader.vue";
+import AppNotify from "components/AppNotify.vue";
 </script>
 
 <template>
@@ -15,6 +16,8 @@ import AppHeader from "components/AppHeader.vue";
       />
     </transition>
   </RouterView>
+
+  <AppNotify />
 </template>
 
 <style lang="scss" scoped>

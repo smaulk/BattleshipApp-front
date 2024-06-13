@@ -1,15 +1,15 @@
-import MainView from "@/views/MainView.vue";
-import GameView from "@/views/GameView.vue";
-import NotFoundView from "@/views/NotFoundView.vue";
+import MainView from "views/MainView.vue";
+import GameView from "views/GameView.vue";
+import NotFoundView from "views/NotFoundView.vue";
 
 export default [
   {
-    name: 'main',
+    name: 'Main',
     path: '/',
     component: MainView,
   },
   {
-    name: 'game',
+    name: 'Game',
     path: '/game',
     component: GameView,
   },
