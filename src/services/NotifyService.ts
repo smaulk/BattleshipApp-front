@@ -8,11 +8,11 @@ export default class NotifyService {
    * @param text текст ошибки
    */
   static error(text: string): void{
-    Notify.send(
-      'Ошибка',
-      text,
-      NotifyType.Error
-    )
+    Notify.send({
+      title: 'Ошибка',
+      text: text,
+      type: NotifyType.Error,
+    });
   }
 
   /**
@@ -20,11 +20,11 @@ export default class NotifyService {
    * @param text текст уведомления
    */
   static success(text: string): void{
-    Notify.send(
-      'Успех',
-      text,
-      NotifyType.Success
-    )
+    Notify.send({
+      title: 'Успех',
+      text: text,
+      type: NotifyType.Success,
+    });
   }
 
   /**
@@ -32,12 +32,12 @@ export default class NotifyService {
    * @param nick имя пользователя
    */
   static newFriend(nick: string): void{
-    Notify.send(
-      'Заявка в друзья',
-      `Пользователь ${nick} хочет добавить вас в друзья.`,
-      NotifyType.Info,
-      10000
-    )
+    Notify.send({
+      title: 'Заявка в друзья',
+      text: `Пользователь ${nick} хочет добавить вас в друзья.`,
+      type: NotifyType.Info,
+      time: 10000
+    });
   }
 
   /**
@@ -45,11 +45,11 @@ export default class NotifyService {
    * @param nick имя пользователя
    */
   static gameInvite(nick: string): void{
-    Notify.send(
-      'Приглашение в игру',
-      `Пользователь ${nick} приглашает вас в игру.`,
-      NotifyType.Info,
-      10000
-    )
+    Notify.send({
+      title: 'Приглашение в игру',
+      text: `Пользователь ${nick} приглашает вас в игру.`,
+      type: NotifyType.Info,
+      time: 10000
+    });
   }
 }

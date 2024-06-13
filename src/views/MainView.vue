@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { DifficultyLevel, DifficultyLevelRU } from "@/enums/DifficultyLevel.ts";
+import NotifyService from "@/services/NotifyService.ts";
 </script>
 
 <template>
@@ -36,6 +37,9 @@ import { DifficultyLevel, DifficultyLevelRU } from "@/enums/DifficultyLevel.ts";
       Информация об игре
     </a>
 
+    <button @click="NotifyService.newFriend('smaulk')">
+      Уведомить
+    </button>
   </div>
 </template>
 

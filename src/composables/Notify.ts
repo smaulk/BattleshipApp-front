@@ -1,6 +1,6 @@
 import { ref, Ref } from "vue";
-import { NotifyType } from "@/enums/NotifyType.ts";
 import Notification from "@/models/Notification.ts";
+import { NotifyData } from "@/interfaces/NotifyData.ts";
 
 export default class Notify {
 
@@ -23,11 +23,15 @@ export default class Notify {
    * @param type тип уведомления
    * @param time время жизни уведомления
    */
-  public static send(title: string, text: string, type: NotifyType, time?: number): void{
-    if (Notify._messages.value.length >= Notify.MAX_MESSAGES) this.removeByI(0);
-    Notify._messages.value.push(
-      new Notification(title, text, type, time ?? this.DISPLAY_TIME)
-    );
+  public static send({
+      title,
+      text,
+      type,
+      time = Notify.DISPLAY_TIME
+    }: NotifyData): void
+  {
+    if (Notify._messages.value.length >= Notify.MAX_MESSAGES) this.removeById(0);
+    Notify._messages.value.push(new Notification(title, text, type, time));
   }
 
   /**
@@ -37,7 +41,7 @@ export default class Notify {
    static remove(id: number): void{
     Notify._messages.value.forEach((mess, i) => {
       if(mess.id === id) {
-        this.removeByI(i);
+        this.removeById(i);
         return;
       }
     })
@@ -46,7 +50,7 @@ export default class Notify {
   /**
    * Удалить элемент из массива
    */
-  private static removeByI(i: number): void{
+  private static removeById(i: number): void{
     Notify._messages.value.splice(i, 1);
   }
 }
