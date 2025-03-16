@@ -1,6 +1,6 @@
 import type { ShipData } from "@/interfaces/ShipData.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { getAroundCells, getShipCells } from "@/helpers";
+import { getAroundCells, getShipCells } from "@/helpers/game.ts";
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 import CellsMatrixService from "@/services/CellsMatrixService.ts";
 

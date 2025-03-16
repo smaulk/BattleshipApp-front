@@ -1,5 +1,5 @@
 import { ShipData } from "@/interfaces/ShipData.ts";
-import { getShipCells, getShipEmptyCells, } from "@/helpers";
+import { getShipCells, getShipEmptyCells, } from "@/helpers/game.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
 import Cell from "@/models/Cell.ts";
 import Ship from "@/models/Ship.ts";

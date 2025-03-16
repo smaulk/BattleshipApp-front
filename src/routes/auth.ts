@@ -1,22 +1,15 @@
 const LoginView = () => import('views/LoginView.vue');
 const RegisterView = () => import('views/RegisterView.vue');
 
-const LogoutView = () => import('views/LogoutView.vue')
-
 export default [
   {
-    name: 'Login',
+    name: 'login',
     path: '/login',
     component: LoginView,
   },
   {
-    name: 'Register',
+    name: 'register',
     path: '/register',
     component: RegisterView,
-  },
-  {
-    name: 'Logout',
-    path: '/logout',
-    component: LogoutView,
   },
 ]

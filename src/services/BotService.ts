@@ -1,4 +1,4 @@
-import { compareNum, getRandomColRowData, getShipEmptyCells } from "@/helpers";
+import { compareNum, getRandomColRowData, getShipEmptyCells } from "@/helpers/game.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
 import { ShotData } from "@/interfaces/ShotData.ts";
 import { ShotStatus } from "@/enums/ShotStatus.ts";

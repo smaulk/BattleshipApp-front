@@ -1,6 +1,6 @@
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { getFilledCellsMatrix, isValidColRowData } from "@/helpers";
+import { getFilledCellsMatrix, isValidColRowData } from "@/helpers/game.ts";
 
 /**
  * Сервис, отвечающий за работу с матрицей клеток, хранящих id корабля.

@@ -2,7 +2,7 @@ import { ColRowData } from "@/interfaces/ColRowData.ts";
 import Ship from "@/models/Ship.ts";
 import ShipPlaceValidationService from "@/services/ShipPlaceValidationService.ts";
 import Cell from "@/models/Cell.ts";
-import { getNewCellData, getStartCellShip } from "@/helpers";
+import { getNewCellData, getStartCellShip } from "@/helpers/game.ts";
 import CellCreatorService from "@/services/CellCreatorService.ts";
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 import { BattlefieldData } from "@/interfaces/BattlefieldData.ts";

@@ -48,7 +48,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div :key="$route.fullPath">
+  <div>
     <GameProcessBlock v-if="gameIsStarted" :cells-array="cellsArray" :difficulty-level="difficultyLevel"
                       :ships-array="shipsArray" @reload-game="reloadGame"/>
     <GameStartBlock v-else :difficulty-level="difficultyLevel" @start-game="startGame"/>

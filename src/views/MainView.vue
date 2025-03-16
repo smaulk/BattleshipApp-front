@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { DifficultyLevel, DifficultyLevelRU } from "@/enums/DifficultyLevel.ts";
-import NotifyService from "@/services/NotifyService.ts";
 </script>
 
 <template>
@@ -18,28 +17,19 @@ import NotifyService from "@/services/NotifyService.ts";
         <div class="difficulty-btns col-10 col-sm-8 col-lg-6 col-xl-4 d-flex flex-column align-items-center gap-3">
           <button
               class="btn-u"
-              @click="$router.push({name: 'Game', query: {difficulty: DifficultyLevel.Easy}})"
+              @click="$router.push({name: 'game', query: {difficulty: DifficultyLevel.Easy}})"
           >
             {{ DifficultyLevelRU[DifficultyLevel.Easy] }}
           </button>
           <button
               class="btn-u"
-              @click="$router.push({name: 'Game', query: {difficulty: DifficultyLevel.Normal}})"
+              @click="$router.push({name: 'game', query: {difficulty: DifficultyLevel.Normal}})"
           >
             {{ DifficultyLevelRU[DifficultyLevel.Normal] }}
           </button>
         </div>
       </div>
     </div>
-    <a class="h4 text-center link link-warning"
-       href="https://ru.wikipedia.org/wiki/%D0%9C%D0%BE%D1%80%D1%81%D0%BA%D0%BE%D0%B9_%D0%B1%D0%BE%D0%B9_(%D0%B8%D0%B3%D1%80%D0%B0)"
-       target="_blank">
-      Информация об игре
-    </a>
-
-    <button @click="NotifyService.newFriend('smaulk')">
-      Уведомить
-    </button>
   </div>
 </template>
 

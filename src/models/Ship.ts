@@ -1,6 +1,6 @@
 import { ShipData } from "@/interfaces/ShipData.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { getColRowData } from "@/helpers";
+import { getColRowData } from "@/helpers/game.ts";
 import FindCellService from "@/services/FindCellService.ts";
 import { Position } from "@/enums/Position.ts";
 

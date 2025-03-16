@@ -1,5 +1,5 @@
 import { ShipData } from "@/interfaces/ShipData.ts";
-import { getNewCellData, getRandomColRowData } from "@/helpers";
+import { getNewCellData, getRandomColRowData } from "@/helpers/game.ts";
 import { Position } from "@/enums/Position.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
 import ShipPlaceValidationService from "@/services/ShipPlaceValidationService.ts";

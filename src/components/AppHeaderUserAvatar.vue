@@ -16,7 +16,7 @@ const {img} = defineProps({
 </template>
 
 <style scoped lang="scss">
-$avatarSize: 45px;
+$avatarSize: 55px;
 
 .avatar {
     border-radius: 25%;

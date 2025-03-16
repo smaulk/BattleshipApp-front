@@ -1,4 +1,4 @@
-import { getColRowData } from "@/helpers";
+import { getColRowData } from "@/helpers/game.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
 import { config } from "@/config.ts";
 

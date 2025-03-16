@@ -2,7 +2,7 @@ import { ColRowData } from "@/interfaces/ColRowData.ts";
 import { ShotData } from "@/interfaces/ShotData.ts";
 import { ShipData } from "@/interfaces/ShipData.ts";
 import { ShotStatus } from "@/enums/ShotStatus.ts";
-import { getStartCellShip } from "@/helpers";
+import { getStartCellShip } from "@/helpers/game.ts";
 import { BattlefieldData } from "@/interfaces/BattlefieldData.ts";
 import CellsMatrixService from "@/services/CellsMatrixService.ts";
 
