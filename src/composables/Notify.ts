@@ -11,7 +11,7 @@ export default class Notify {
   static get messages(){
     return Notify._messages.value;
   }
-  //Дефолтное время жизни уведомления
+  //Дефолтное время жизни уведомления мс
   private static readonly DISPLAY_TIME: number = 5000;
   //Максимальное количество уведомлений
   private static readonly MAX_MESSAGES: number = 4;
@@ -22,16 +22,20 @@ export default class Notify {
    * @param text текст уведомления
    * @param type тип уведомления
    * @param time время жизни уведомления
+   * @param accept замыкание "принять"
+   * @param reject замыкание "отклонить"
    */
   public static send({
       title,
       text,
       type,
-      time = Notify.DISPLAY_TIME
+      time = Notify.DISPLAY_TIME,
+      accept = null,
+      reject = null,
     }: NotifyData): void
   {
     if (Notify._messages.value.length >= Notify.MAX_MESSAGES) this.removeById(0);
-    Notify._messages.value.push(new Notification(title, text, type, time));
+    Notify._messages.value.push(new Notification(title, text, type, time, accept, reject));
   }
 
   /**

@@ -4,12 +4,16 @@ import { NotifyType } from "@/enums/NotifyType.ts";
  * Данные уведомления
  */
 export interface NotifyData{
-  //Заголовок уведомления
+  // Заголовок уведомления
   title: string,
-  //Текст уведомления
+  // Текст уведомления
   text: string,
-  //Тип уведомления
+  // Тип уведомления
   type: NotifyType,
-  //Время жизни уведомления
+  // Время жизни уведомления
   time?: number,
+  // Замыкание "принять"
+  accept?: (() => Promise<boolean>) | null,
+  // Замыкание "отклонить"
+  reject?: (() => Promise<boolean>) | null,
 }

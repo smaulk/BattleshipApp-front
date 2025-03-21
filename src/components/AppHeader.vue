@@ -57,7 +57,7 @@ const showModal = (): void => {
             </li>
 
             <li class="nav-item d-lg-none">
-              <AppHeaderLink>Настройки</AppHeaderLink>
+              <AppHeaderLink>Профиль</AppHeaderLink>
             </li>
             <li class="nav-item d-lg-none">
               <AppHeaderLink @click="showModal">Выход</AppHeaderLink>

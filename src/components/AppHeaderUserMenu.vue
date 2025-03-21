@@ -12,7 +12,7 @@ const logout = () => {
 <template>
   <ul class="dropdown-menu dropdown-menu-lg-end">
     <li>
-      <button class="button menu-button">Настройки</button>
+      <button class="button menu-button">Профиль</button>
     </li>
     <li>
       <button class="button menu-button" @click="logout">Выход</button>

@@ -1,5 +1,7 @@
 import Notify from "@/composables/Notify.ts";
 import { NotifyType } from "@/enums/NotifyType.ts";
+import { acceptFriendship, deleteFriendship } from "@/services/FriendshipService.ts";
+import { acceptInvite, deleteInvite } from "@/services/InviteService.ts";
 
 export default class NotifyService {
 
@@ -44,27 +46,41 @@ export default class NotifyService {
 
   /**
    * Уведомление о новой заявке в друзья
-   * @param nickname имя пользователя
+   * @param message
+   * @param senderId
    */
-  static friendRequest(nickname: string): void {
+  static newFriendRequest(message: string, senderId: number): void {
     Notify.send({
-      title: 'Заявка в друзья',
-      text: `Пользователь ${nickname} хочет добавить вас в друзья.`,
+      title: 'Новая заявка в друзья',
+      text: message,
       type: NotifyType.Info,
-      time: 10000
+      time: 10000,
+      accept: async () => {
+        return await acceptFriendship(senderId);
+      },
+      reject: async () => {
+        return await deleteFriendship(senderId);
+      }
     });
   }
 
   /**
    * Уведомление о приглашении в игру
-   * @param nickname имя пользователя
+   * @param message
+   * @param senderId
    */
-  static gameInvite(nickname: string): void {
+  static gameInvite(message: string, senderId: number): void {
     Notify.send({
       title: 'Приглашение в игру',
-      text: `Пользователь ${nickname} приглашает вас в игру.`,
+      text: message,
       type: NotifyType.Info,
-      time: 10000
+      time: 10000,
+      accept: async () => {
+        return await acceptInvite(senderId);
+      },
+      reject: async () => {
+        return await deleteInvite(senderId);
+      }
     });
   }
 }

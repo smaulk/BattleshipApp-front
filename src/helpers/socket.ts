@@ -24,13 +24,13 @@ export function connectEvents(userId: number): void {
   getEcho()
     .private(`users.${userId}.events`)
     .listen('.create.request', async (notify: NotifyEvent): Promise<void> => {
-      NotifyService.info('Новая заявка в друзья', notify.message);
+      NotifyService.newFriendRequest(notify.message, notify.senderId);
     })
     .listen('.accept.request',  async (notify: NotifyEvent): Promise<void> => {
       NotifyService.info('Заявка в друзья', notify.message)
     })
     .listen('.create.invite', async (notify: NotifyEvent): Promise<void> => {
-      NotifyService.info('Приглашение в игру', notify.message);
+      NotifyService.gameInvite(notify.message, notify.senderId)
     })
     .listen('.create.room', async (data: CreateRoom): Promise<void> => {
       NotifyService.success('Комната создана');

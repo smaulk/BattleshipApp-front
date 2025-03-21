@@ -67,6 +67,15 @@ body {
   }
 }
 
+.btn-cancel {
+  @extend .btn-u;
+  background: $important-color;
+
+  &:hover {
+    background: lighten($important-color, 10%);
+  }
+}
+
 .muted-text {
   color: $muted-color,
 }

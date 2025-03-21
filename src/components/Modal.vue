@@ -66,13 +66,5 @@ defineExpose({ show });
   display: flex;
   justify-content: center;
   gap: 15px;
-
-  .btn-cancel {
-    background: $important-color;
-
-    &:hover {
-      background: lighten($important-color, 10%);
-    }
-  }
 }
 </style>

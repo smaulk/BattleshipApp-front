@@ -1,6 +1,21 @@
 <script setup lang="ts">
 import Notify from "@/composables/Notify.ts";
 import { NotifyType } from "@/enums/NotifyType.ts";
+import Notification from "@/models/Notification.ts";
+
+const accept = async (notify: Notification) => {
+  if (notify.accept === null) return;
+  if (await notify.accept()) {
+    notify.remove();
+  }
+}
+
+const reject = async (notify: Notification) => {
+  if (notify.reject === null) return;
+  if (await notify.reject()) {
+    notify.remove();
+  }
+}
 
 </script>
 
@@ -26,6 +41,11 @@ import { NotifyType } from "@/enums/NotifyType.ts";
 
         <div class="notification-body">
           <span>{{notify.text}}</span>
+        </div>
+
+        <div class="notification-buttons" v-if="notify.accept != null && notify.reject != null">
+          <button class="btn-u" @click="accept(notify)">Принять</button>
+          <button class="btn-u btn-cancel" @click="reject(notify)">Отклонить</button>
         </div>
 
       </div>
@@ -86,6 +106,12 @@ import { NotifyType } from "@/enums/NotifyType.ts";
     .notification-body{
       font-size: 16px;
       line-height: 20px;
+    }
+
+    .notification-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
     }
   }
 }
