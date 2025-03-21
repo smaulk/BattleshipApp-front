@@ -45,7 +45,7 @@ const reject = async (notify: Notification) => {
 
         <div class="notification-buttons" v-if="notify.accept != null && notify.reject != null">
           <button class="btn-u" @click="accept(notify)">Принять</button>
-          <button class="btn-u btn-cancel" @click="reject(notify)">Отклонить</button>
+          <button class="btn-cancel" @click="reject(notify)">Отклонить</button>
         </div>
 
       </div>

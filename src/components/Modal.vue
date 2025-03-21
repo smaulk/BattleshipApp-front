@@ -4,7 +4,7 @@
       <slot></slot>
       <div class="modal-actions">
         <button class="btn-u h7" @click="confirm">Ок</button>
-        <button class="btn-u btn-cancel h7" @click="close">Отмена</button>
+        <button class="btn-cancel h7" @click="close">Отмена</button>
       </div>
     </div>
   </div>
