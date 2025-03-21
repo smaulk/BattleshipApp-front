@@ -55,10 +55,10 @@ export default class NotifyService {
       text: message,
       type: NotifyType.Info,
       time: 10000,
-      accept: async () => {
+      accept: async (): Promise<boolean> => {
         return await acceptFriendship(senderId);
       },
-      reject: async () => {
+      reject: async (): Promise<boolean> => {
         return await deleteFriendship(senderId);
       }
     });
@@ -75,10 +75,10 @@ export default class NotifyService {
       text: message,
       type: NotifyType.Info,
       time: 10000,
-      accept: async () => {
+      accept: async (): Promise<boolean> => {
         return await acceptInvite(senderId);
       },
-      reject: async () => {
+      reject: async (): Promise<boolean> => {
         return await deleteInvite(senderId);
       }
     });
