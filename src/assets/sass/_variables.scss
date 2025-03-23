@@ -6,7 +6,8 @@ $main-color: white;
 $second-color: #346450;
 $third-color: black;
 $important-color: #dc3545;
-$muted-color: #939393;
+$muted-color: #828282;
+$success-color: #28a745;
 
 $notify-info: #f8f8f1;
 $notify-success: green;
@@ -31,16 +32,16 @@ $game-grid-cell-border: 1px solid #9393b8;
 //Картинки кораблей в горизонтальном виде
 //noinspection CssUnknownTarget
 $ships-h: (
-    4:url('assets/images/ships/four_h.svg'),
-    3:url('assets/images/ships/triple_h.svg'),
+    4: url('assets/images/ships/four_h.svg'),
+    3: url('assets/images/ships/triple_h.svg'),
     2: url('assets/images/ships/double_h.svg'),
     1: url('assets/images/ships/single_h.svg'),
 );
 //Картинки кораблей в вертикальном виде
 //noinspection CssUnknownTarget
 $ships-v: (
-    4:url('assets/images/ships/four_v.svg'),
-    3:url('assets/images/ships/triple_v.svg'),
+    4: url('assets/images/ships/four_v.svg'),
+    3: url('assets/images/ships/triple_v.svg'),
     2: url('assets/images/ships/double_v.svg'),
     1: url('assets/images/ships/single_v.svg'),
 );

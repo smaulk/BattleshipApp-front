@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { header_logo } from '@/config.ts';
+import { headerLogo } from '@/game.config.ts';
 import AppHeaderLogo from "components/AppHeaderLogo.vue";
 import AppHeaderLink from "components/AppHeaderLink.vue";
 import AppHeaderUserInfo from "components/AppHeaderUserInfo.vue";
@@ -7,11 +7,12 @@ import { ref } from "vue";
 import { logout } from "@/services/AuthService.ts";
 import { useRouter } from "vue-router";
 import Modal from "components/Modal.vue";
+import ModalActions from "components/ModalActions.vue";
 
 const router = useRouter();
 const nickname = ref<string | null>(localStorage.getItem('userNickname'))
-const avatarUrl = ref<string | null>(localStorage.getItem('userAvatarUrl'))
-const modalRef = ref(null);
+const avatarUrl = ref<string | null>(localStorage.getItem('userAvatarUrl') || null)
+const modalRef = ref<typeof Modal | null>(null);
 
 // Слушатель события авторизации
 window.addEventListener('auth', (event: any): void => {
@@ -19,15 +20,19 @@ window.addEventListener('auth', (event: any): void => {
   avatarUrl.value = event.detail.avatarUrl;
 });
 
-const onLogout = async (): Promise<void> => {
-  logout();
-  await router.push({name: 'home'});
-}
-
 const showModal = (): void => {
   modalRef.value?.show();
 };
 
+const closeModal = (): void => {
+  modalRef.value?.close();
+}
+
+const onLogout = async (): Promise<void> => {
+  logout();
+  closeModal();
+  await router.push({name: 'home'});
+}
 </script>
 
 <template>
@@ -35,7 +40,7 @@ const showModal = (): void => {
     <div class="container-fluid">
       <AppHeaderLogo
           class="navbar-brand"
-          :img="header_logo"
+          :img="headerLogo"
       />
 
       <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -89,8 +94,9 @@ const showModal = (): void => {
         </div>
       </template>
 
-      <Modal ref="modalRef" @confirm="onLogout">
+      <Modal ref="modalRef">
         <p class="h4">Выйти из аккаунта?</p>
+        <ModalActions @confirm="onLogout" @reject="closeModal"></ModalActions>
       </Modal>
     </div>
   </nav>

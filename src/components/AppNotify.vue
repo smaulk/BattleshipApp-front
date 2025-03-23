@@ -58,6 +58,7 @@ const reject = async (notify: Notification) => {
   position: fixed;
   right: 10px;
   bottom: 10px;
+  z-index: 1100;
 
   display: flex;
   flex-direction: column;

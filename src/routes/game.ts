@@ -1,4 +1,5 @@
-import GameView from "views/GameView.vue";
+
+const GameView = () => import('views/GameView.vue')
 
 export default [
   {

@@ -33,28 +33,32 @@ const onRegister = (event: Event) => {
 
 <template>
   <div class="container d-flex justify-content-center align-items-center">
-    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%">
+    <div class="app-card shadow-sm p-4">
       <h2 class="text-center mb-4 h3">Регистрация</h2>
-      <div class="mb-3 h5">
-        <label for="nickname" class="form-label">Никнейм</label>
-        <input v-model="userData.nickname" type="text" class="form-control h7" id="nickname"
-               placeholder="Введите никнейм"/>
-      </div>
-      <div class="mb-3 h5">
-        <label for="email" class="form-label">Email</label>
-        <input v-model="userData.email" type="email" class="form-control h7" id="email" placeholder="Введите email"/>
-      </div>
-      <div class="mb-3 h5">
-        <label for="password" class="form-label">Пароль</label>
-        <input v-model="userData.password" type="password" class="form-control h7" id="password"
-               placeholder="Введите пароль"/>
-      </div>
-      <div class="mb-3 h5">
-        <label for="passwordConfirmation" class="form-label">Подтверждение пароля</label>
-        <input v-model="userData.passwordConfirmation" type="password" class="form-control h7" id="passwordConfirmation"
-               placeholder="Повторите пароль"/>
-      </div>
-      <button class="btn btn-u w-100 h6" @click="onRegister">Зарегистрироваться</button>
+      <form @submit.prevent="onRegister">
+        <div class="mb-3 h5">
+          <label for="nickname" class="form-label">Никнейм</label>
+          <input v-model="userData.nickname" type="text" class="form-control h7" id="nickname"
+                 placeholder="Введите никнейм" minlength="3" maxlength="18" required/>
+        </div>
+        <div class="mb-3 h5">
+          <label for="email" class="form-label">Email</label>
+          <input v-model="userData.email" type="email" class="form-control h7" id="email" placeholder="Введите email"
+                 required/>
+        </div>
+        <div class="mb-3 h5">
+          <label for="password" class="form-label">Пароль</label>
+          <input v-model="userData.password" type="password" class="form-control h7" id="password"
+                 placeholder="Введите пароль" minlength="8" required/>
+        </div>
+        <div class="mb-3 h5">
+          <label for="passwordConfirmation" class="form-label">Подтверждение пароля</label>
+          <input v-model="userData.passwordConfirmation" type="password" class="form-control h7"
+                 id="passwordConfirmation"
+                 placeholder="Повторите пароль" minlength="8" required/>
+        </div>
+        <button type="submit" class="btn btn-u w-100 h6">Зарегистрироваться</button>
+      </form>
     </div>
   </div>
 </template>

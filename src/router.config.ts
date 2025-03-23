@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory, RouteLocationNormalized, Router } from "vue-router";
 import auth from "@/routes/auth.ts";
+import url from "@/routes/url.ts";
 import main from "@/routes/main.ts";
 import game from '@/routes/game.ts'
 import { checkAuth } from "@/services/AuthService.ts";
@@ -10,12 +11,13 @@ const router: Router = createRouter({
   history: createWebHistory(),
   routes: [
     ...auth,
+    ...url,
     ...main,
     ...game,
   ],
 });
 
-const onlyGuestRoutes = ['login', 'register'];
+const onlyGuestRoutes = ['login', 'register', 'reset-password'];
 const onlyLoggedRoutes = ['settings', 'friends', 'statistics']
 
 router.beforeEach(async (

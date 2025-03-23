@@ -1,14 +1,14 @@
 import { apiLogin, apiRefresh } from "@/api/auth";
 import { AxiosLogin, LoginResponse, PayloadAccessToken } from "@/interfaces/Auth";
 import NotifyService from "@/services/NotifyService.ts";
-import { emailValidation } from "@/services/ValidationService.ts";
+import { emailValidation, expValidation } from "@/services/ValidationService.ts";
 import { connectEvents, connectOnline } from "@/helpers/socket.ts";
 
 /**
  * Авторизация
  */
 async function login(email: string, password: string): Promise<boolean> {
-  if(!emailValidation(email)){
+  if (!emailValidation(email)) {
     return false;
   }
 
@@ -46,13 +46,9 @@ async function checkAuth(): Promise<boolean> {
   if (!accessToken || !refreshToken) {
     return false;
   }
-
-  const now: number = Date.now() / 1000;
   const payload: PayloadAccessToken = getPayload(accessToken);
 
-  return now + 900 >= payload.exp
-    ? await refresh(refreshToken)
-    : true;
+  return expValidation(payload.exp, 60) || await refresh(refreshToken);
 }
 
 /**
@@ -77,8 +73,9 @@ function saveAuthData(data: LoginResponse): void {
   localStorage.setItem('refreshToken', data.refreshToken);
   localStorage.setItem('userId', String(payload.id));
   localStorage.setItem('userNickname', String(payload.nickname));
-  localStorage.setItem('userAvatarUrl', String(payload.avatarUrl));
+  localStorage.setItem('userAvatarUrl', payload.avatarUrl ? String(payload.avatarUrl) : '');
   sendAuthEvent(payload.nickname, payload.avatarUrl);
+
   connectOnline(payload.id);
   connectEvents(payload.id);
 }
@@ -91,7 +88,7 @@ function getPayload(accessToken: string): PayloadAccessToken {
   return JSON.parse(decodedPayload);
 }
 
-function sendAuthEvent(nickname: string|null, avatarUrl: string|null): void {
+function sendAuthEvent(nickname: string | null, avatarUrl: string | null): void {
   window.dispatchEvent(new CustomEvent('auth', {
     detail: {
       nickname: nickname,

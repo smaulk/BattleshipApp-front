@@ -1,11 +1,12 @@
-import MainView from "views/MainView.vue";
-import NotFoundView from "views/NotFoundView.vue";
+
+const HomeView = () => import('views/HomeView.vue');
+const NotFoundView = () => import('views/NotFoundView.vue');
 
 export default [
   {
     name: 'home',
     path: '/',
-    component: MainView,
+    component: HomeView,
   },
   {
     name: '404',

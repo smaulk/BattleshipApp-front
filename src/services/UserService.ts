@@ -13,7 +13,7 @@ async function createUser(userData: CreateUser): Promise<boolean> {
 
   const response = await apiCreateUser(userData);
   if (response.status === 201) {
-    NotifyService.success("Успешная регистрация");
+    NotifyService.success("Успешная регистрация!");
     return true;
   }
   return false;

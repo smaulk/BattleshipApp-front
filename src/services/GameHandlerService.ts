@@ -1,7 +1,7 @@
 import { GameStatus } from "@/enums/GameStatus.ts";
 import GameDisplayService from "@/services/GameDisplayService.ts";
 import BotService from "@/services/BotService.ts";
-import { config } from "@/config.ts";
+import { gameConfig } from "@/game.config.ts";
 import { getColRowData, getRandomInt } from "@/helpers/game.ts";
 import ShotService from "@/services/ShotService.ts";
 import { ShotData } from "@/interfaces/ShotData.ts";
@@ -88,7 +88,7 @@ export class GameHandlerService {
    * Случайное время ожидания бота.
    */
   private getBotWaitTime(): number {
-    return config.minBotWaitTimeMS + getRandomInt(config.maxBotWaitTimeMS - config.minBotWaitTimeMS);
+    return gameConfig.minBotWaitTimeMS + getRandomInt(gameConfig.maxBotWaitTimeMS - gameConfig.minBotWaitTimeMS);
   }
 
   /**

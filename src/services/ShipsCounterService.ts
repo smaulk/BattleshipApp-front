@@ -1,4 +1,4 @@
-import { config } from "@/config.ts";
+import { gameConfig } from "@/game.config.ts";
 import { ShipData } from "@/interfaces/ShipData.ts";
 import { Position } from "@/enums/Position.ts";
 import { reactive } from "vue";
@@ -17,11 +17,11 @@ export default class ShipsCounterService {
   private readonly shipsOfSize4: number;
 
   constructor() {
-    this.countShips = config.countShips;
-    this.shipsOfSize1 = config.countShipsOfSize1;
-    this.shipsOfSize2 = config.countShipsOfSize2;
-    this.shipsOfSize3 = config.countShipsOfSize3;
-    this.shipsOfSize4 = config.countShipsOfSize4;
+    this.countShips = gameConfig.countShips;
+    this.shipsOfSize1 = gameConfig.countShipsOfSize1;
+    this.shipsOfSize2 = gameConfig.countShipsOfSize2;
+    this.shipsOfSize3 = gameConfig.countShipsOfSize3;
+    this.shipsOfSize4 = gameConfig.countShipsOfSize4;
     this._countOfRemaining = this.getDefaultShipsCount();
     this._countOfPlaced = 0;
 

@@ -3,7 +3,7 @@ import { AxiosResponse } from "axios";
 export interface PayloadAccessToken {
   id: number,
   nickname: string,
-  avatarUrl: string|null,
+  avatarUrl: string | null,
   exp: number,
 }
 

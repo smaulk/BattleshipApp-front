@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import { config } from "@/config.ts";
+import { gameConfig } from "@/game.config.ts";
 
 const emits = defineEmits(['update:cells'])
 
@@ -18,12 +18,12 @@ const getLetter = (i: number): string => {
   <div class="battlefield-container">
 
     <div class="header-cell"></div>
-    <div v-for="i in config.countCells" class="header-cell">{{ getLetter(i) }}</div>
+    <div v-for="i in gameConfig.countCells" class="header-cell">{{ getLetter(i) }}</div>
 
-    <template v-for="row in config.countCells">
+    <template v-for="row in gameConfig.countCells">
       <div class="header-cell">{{ row }}</div>
       <div
-          v-for="col in config.countCells"
+          v-for="col in gameConfig.countCells"
           ref="cellElements"
           :data-col="col-1"
           :data-row="row-1"

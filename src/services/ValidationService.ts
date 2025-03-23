@@ -41,3 +41,8 @@ export function passwordValidation(password: string, passwordConfirmation: strin
 
   return true;
 }
+
+export function expValidation(exp: number, addSeconds: number = 0): boolean {
+  const now: number = Date.now() / 1000;
+  return now + addSeconds < exp;
+}

@@ -1,6 +1,6 @@
 import { getColRowData } from "@/helpers/game.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { config } from "@/config.ts";
+import { gameConfig } from "@/game.config.ts";
 
 /**
  * Сервис, отвечающий за поиск клетки в координатах курсора.
@@ -13,7 +13,7 @@ export default class FindCellService {
 
   constructor(cellElements: Array<HTMLDivElement>) {
     this.cellElements = cellElements;
-    this.cellCount = config.countCells;
+    this.cellCount = gameConfig.countCells;
   }
 
   /**

@@ -1,5 +1,5 @@
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { config } from "@/config.ts";
+import { gameConfig } from "@/game.config.ts";
 import { ShipData } from "@/interfaces/ShipData.ts";
 import { Position } from "@/enums/Position.ts";
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
@@ -29,7 +29,7 @@ function equalColRowData(data1: ColRowData, data2: ColRowData): boolean {
  * Получить матрицу, заполненную указанным значением
  */
 function getFilledCellsMatrix<T>(value: T): T[][] {
-  const count = config.countCells;
+  const count = gameConfig.countCells;
   const cells: T[][] = [];
   for (let i = 0; i < count; i++) {
     cells.push(Array(count).fill(value));
@@ -45,7 +45,7 @@ function getRandomInt(max: number): number {
 }
 
 function getRandomColRowData(): ColRowData {
-  const max = config.countCells;
+  const max = gameConfig.countCells;
   return {
     col: getRandomInt(max),
     row: getRandomInt(max)
@@ -65,7 +65,7 @@ function compareNum(num1: number, num2: number): 0 | 1 | -1 {
  * Проверка, что индекс клетки правильный.
  */
 function isValidIndex(index: number): boolean {
-  return index >= 0 && index < config.countCells;
+  return index >= 0 && index < gameConfig.countCells;
 }
 
 /**
