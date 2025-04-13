@@ -4,6 +4,7 @@ import { login } from "@/services/AuthService.ts";
 import { createUser } from "@/services/UserService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 import { useRouter } from "vue-router";
+import PasswordInput from "components/PasswordInput.vue";
 
 const { unique } = useLoading();
 const router = useRouter();
@@ -48,14 +49,13 @@ const onRegister = (event: Event) => {
         </div>
         <div class="mb-3 h5">
           <label for="password" class="form-label">Пароль</label>
-          <input v-model="userData.password" type="password" class="form-control h7" id="password"
-                 placeholder="Введите пароль" minlength="8" required/>
+          <PasswordInput v-model="userData.password" id="password" placeholder="Введите пароль" :required="true"
+                         :minlength="8"/>
         </div>
         <div class="mb-3 h5">
           <label for="passwordConfirmation" class="form-label">Подтверждение пароля</label>
-          <input v-model="userData.passwordConfirmation" type="password" class="form-control h7"
-                 id="passwordConfirmation"
-                 placeholder="Повторите пароль" minlength="8" required/>
+          <PasswordInput v-model="userData.passwordConfirmation" id="passwordConfirmation"
+                         placeholder="Повторите пароль" :required="true" :minlength="8"/>
         </div>
         <button type="submit" class="btn btn-u w-100 h6">Зарегистрироваться</button>
       </form>

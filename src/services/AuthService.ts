@@ -100,6 +100,7 @@ function sendAuthEvent(nickname: string | null, avatarUrl: string | null): void 
 export {
   login,
   logout,
+  refresh,
   checkAuth,
 };
 

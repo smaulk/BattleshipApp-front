@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import Modal from "components/Modal.vue";
 import { forgotPassword } from "@/services/PasswordService.ts";
 import ModalActions from "components/ModalActions.vue";
+import PasswordInput from "components/PasswordInput.vue";
 
 const { unique } = useLoading();
 const router = useRouter();
@@ -54,8 +55,7 @@ const onForgotPassword = async (): Promise<void> => {
         </div>
         <div class="mb-3 h5">
           <label for="password" class="form-label">Пароль</label>
-          <input v-model="password" type="password" class="form-control h7" id="password"
-                 placeholder="Введите пароль" minlength="8" required/>
+          <PasswordInput v-model="password" id="password" placeholder="Введите пароль" :required="true" :minlength="8"/>
         </div>
         <button type="submit" class="btn btn-u w-100 h6">Войти</button>
       </form>

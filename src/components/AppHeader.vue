@@ -11,13 +11,11 @@ import ModalActions from "components/ModalActions.vue";
 
 const router = useRouter();
 const nickname = ref<string | null>(localStorage.getItem('userNickname'))
-const avatarUrl = ref<string | null>(localStorage.getItem('userAvatarUrl') || null)
 const modalRef = ref<typeof Modal | null>(null);
 
 // Слушатель события авторизации
 window.addEventListener('auth', (event: any): void => {
   nickname.value = event.detail.nickname;
-  avatarUrl.value = event.detail.avatarUrl;
 });
 
 const showModal = (): void => {
@@ -76,7 +74,6 @@ const onLogout = async (): Promise<void> => {
             data-bs-toggle="dropdown"
             aria-expanded="false"
             :nickname="nickname"
-            :avatar-url="avatarUrl"
             @logout="showModal"
         />
       </template>

@@ -1,4 +1,5 @@
-import { apiAcceptInvite, apiCreateInvite, apiDeleteInvite } from "@/api/invite.ts";
+import { apiAcceptInvite, apiCreateInvite, apiDeleteInvite, apiGetInInvites, apiGetOutInvites } from "@/api/invite.ts";
+import { PaginateInvites } from "@/interfaces/Invite.ts";
 
 async function createInvite(friendId: number): Promise<boolean> {
   const response = await apiCreateInvite(friendId);
@@ -15,8 +16,26 @@ async function deleteInvite(friendId: number): Promise<boolean> {
   return response.status === 204;
 }
 
+async function getOutInvites(startId: number | null): Promise<PaginateInvites | null> {
+  const response = await apiGetOutInvites(startId);
+  if (response.status === 200) {
+    return response.data;
+  }
+  return null;
+}
+
+async function getInInvites(startId: number | null): Promise<PaginateInvites | null> {
+  const response = await apiGetInInvites(startId);
+  if (response.status === 200) {
+    return response.data;
+  }
+  return null;
+}
+
 export {
   createInvite,
   acceptInvite,
-  deleteInvite
+  deleteInvite,
+  getOutInvites,
+  getInInvites,
 }

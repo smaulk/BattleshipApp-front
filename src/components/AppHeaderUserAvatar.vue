@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { userAvatar } from "@/game.config.ts";
 
-const { img } = defineProps({
-  img: String,
+const avatarUrl = ref<string | null>(localStorage.getItem('userAvatarUrl') || null)
+
+// Слушатель события авторизации
+window.addEventListener('auth', (event: any): void => {
+  avatarUrl.value = event.detail.avatarUrl;
 });
 
-const avatar = computed(() => img || userAvatar)
+const avatar = computed(() => avatarUrl.value || userAvatar)
+
 </script>
 
 <template>
