@@ -56,7 +56,7 @@ const onLogout = async (): Promise<void> => {
               <AppHeaderLink>Статистика</AppHeaderLink>
             </li>
             <li class="nav-item">
-              <AppHeaderLink>Друзья</AppHeaderLink>
+              <AppHeaderLink :path="{name: 'friends'}">Друзья</AppHeaderLink>
             </li>
 
             <li class="nav-item d-lg-none">

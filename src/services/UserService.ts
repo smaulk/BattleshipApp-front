@@ -1,8 +1,9 @@
-import { CreateUser, UpdateUser } from "@/interfaces/User.ts";
+import { CreateUser, PaginateUsers, UpdateUser } from "@/interfaces/User.ts";
 import NotifyService from "@/services/NotifyService.ts";
-import { apiCreateUser, apiDeleteAvatar, apiUpdateAvatar, apiUpdateUser } from "@/api/user.ts";
+import { apiCreateUser, apiDeleteAvatar, apiGetUsers, apiUpdateAvatar, apiUpdateUser } from "@/api/user.ts";
 import { emailValidation, nicknameValidation, passwordValidation } from "@/services/ValidationService.ts";
 import { refresh } from "@/services/AuthService.ts"
+import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
 
 async function refreshUserStorage(): Promise<void> {
   const refreshToken: string | null = localStorage.getItem('refreshToken');
@@ -58,9 +59,18 @@ async function deleteAvatar(): Promise<boolean> {
   return false;
 }
 
+async function getUsers(data: PaginateUsersParams): Promise<PaginateUsers | null> {
+  const response = await apiGetUsers(data);
+  if (response.status === 200) {
+    return response.data;
+  }
+  return null;
+}
+
 export {
   createUser,
   updateUser,
   updateAvatar,
   deleteAvatar,
+  getUsers,
 }
