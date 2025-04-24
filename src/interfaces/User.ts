@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import { PaginateCollection } from "@/interfaces/Paginate.ts";
+import { FriendshipType } from "@/enums/FriendshipType.ts";
 
 export interface CreateUser {
   nickname: string,
@@ -26,7 +27,7 @@ export interface User {
   nickname: string,
   avatarUrl: string,
   isOnline: boolean,
-  friendshipType: number,
+  friendshipType: FriendshipType | null,
   statistic: Statistic,
 }
 
@@ -37,6 +38,7 @@ export interface Statistic {
   draws: number,
   points: number,
 }
+
 
 export type AxiosSelfUser = AxiosResponse<{ data: SelfUser }>;
 export type AxiosUser = AxiosResponse<{ data: User }>

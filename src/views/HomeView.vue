@@ -45,6 +45,7 @@ const onGameBot = (level: DifficultyLevel) => {
           <button class="btn-u" @click="showModal">Игра с ботом</button>
 
           <Modal ref="modalRef">
+            <p class="h4 mb-4">Выберите уровень сложности</p>
             <div class="home-btns d-flex flex-column align-items-center gap-3">
               <button class="btn-u" @click="onGameBot(DifficultyLevel.Easy)">
                 {{ DifficultyLevelRU[DifficultyLevel.Easy] }}

@@ -9,11 +9,11 @@ defineProps<{
   minlength?: number;
 }>();
 
-const emit = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue']);
 
 const updateValue = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  emit('update:modelValue', target.value);
+  emits('update:modelValue', target.value);
 };
 
 const showPassword = ref(false);

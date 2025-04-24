@@ -1,16 +1,16 @@
 <script setup lang="ts">
 
-const emit = defineEmits<{
+const emits = defineEmits<{
   (event: 'confirm'): void | Promise<void>;
   (event: "reject"): void;
 }>();
 
 const confirm = async () => {
-  emit('confirm');
+  emits('confirm');
 };
 
 const reject = () => {
-  emit('reject')
+  emits('reject')
 }
 
 </script>
