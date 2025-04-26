@@ -2,14 +2,14 @@ import { AxiosResponse } from "axios";
 import { PaginateCollection } from "@/interfaces/Paginate.ts";
 import { FriendshipType } from "@/enums/FriendshipType.ts";
 
-export interface CreateUser {
+export interface CreateUserData {
   nickname: string,
   email: string,
   password: string,
   passwordConfirmation: string
 }
 
-export interface UpdateUser {
+export interface UpdateUserData {
   nickname: string,
   email: string,
 }
@@ -20,12 +20,14 @@ export interface SelfUser {
   email: string,
   isVerified: boolean,
   avatarUrl: string,
+  isOnline: boolean,
+  statistic: Statistic,
 }
 
 export interface User {
   id: number,
   nickname: string,
-  avatarUrl: string,
+  avatarUrl: string | null,
   isOnline: boolean,
   friendshipType: FriendshipType | null,
   statistic: Statistic,

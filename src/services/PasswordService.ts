@@ -1,9 +1,9 @@
 import { emailValidation, passwordValidation } from "@/services/ValidationService.ts";
 import NotifyService from "@/services/NotifyService.ts";
 import { apiForgotPassword, apiResetPassword, apiUpdatePassword } from "@/api/password.ts";
-import { ResetPassword, UpdatePassword } from "@/interfaces/Password.ts";
+import { ResetPasswordData, UpdatePasswordData } from "@/interfaces/Password.ts";
 
-async function updatePassword(data: UpdatePassword): Promise<boolean> {
+async function updatePassword(data: UpdatePasswordData): Promise<boolean> {
   if (!passwordValidation(data.newPassword, data.newPasswordConfirmation)) {
     return false;
   }
@@ -29,7 +29,7 @@ async function forgotPassword(email: string): Promise<boolean> {
   return false;
 }
 
-async function resetPassword(data: ResetPassword): Promise<boolean> {
+async function resetPassword(data: ResetPasswordData): Promise<boolean> {
   if (!passwordValidation(data.password, data.passwordConfirmation)) {
     return false;
   }

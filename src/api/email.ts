@@ -12,5 +12,5 @@ export async function apiVerifyEmail({ userId, hash, expiration, signature }: Ve
 
 export async function apiSendEmailVerification(): Promise<AxiosNoContent>
 {
-  return handleApiResponse<AxiosNoContent>(request.post(`/users/me/email-verification/send`));
+  return handleApiResponse<AxiosNoContent>(request.post(`/api/v1/users/me/email-verification/send`));
 }

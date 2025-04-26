@@ -1,6 +1,6 @@
-import { CreateUser, PaginateUsers, UpdateUser } from "@/interfaces/User.ts";
+import { CreateUserData, PaginateUsers, SelfUser, UpdateUserData, User } from "@/interfaces/User.ts";
 import NotifyService from "@/services/NotifyService.ts";
-import { apiCreateUser, apiDeleteAvatar, apiGetUsers, apiUpdateAvatar, apiUpdateUser } from "@/api/user.ts";
+import { apiCreateUser, apiDeleteAvatar, apiGetUser, apiGetUsers, apiUpdateAvatar, apiUpdateUser } from "@/api/user.ts";
 import { emailValidation, nicknameValidation, passwordValidation } from "@/services/ValidationService.ts";
 import { refresh } from "@/services/AuthService.ts"
 import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
@@ -12,7 +12,7 @@ async function refreshUserStorage(): Promise<void> {
   }
 }
 
-async function createUser(userData: CreateUser): Promise<boolean> {
+async function createUser(userData: CreateUserData): Promise<boolean> {
   if (!(nicknameValidation(userData.nickname)
     && emailValidation(userData.email)
     && passwordValidation(userData.password, userData.passwordConfirmation))) {
@@ -27,17 +27,18 @@ async function createUser(userData: CreateUser): Promise<boolean> {
   return false;
 }
 
-async function updateUser(userData: UpdateUser): Promise<boolean> {
+async function updateUser(userData: UpdateUserData): Promise<SelfUser | null> {
   if (!(nicknameValidation(userData.nickname) && emailValidation(userData.email))) {
-    return false;
+    return null;
   }
 
   const response = await apiUpdateUser(userData);
-  if (response.status === 201) {
+  if (response.status === 200) {
+    await refreshUserStorage();
     NotifyService.success('Данные успешно обновлены!');
-    return true;
+    return response.data.data;
   }
-  return false;
+  return null;
 }
 
 async function updateAvatar(avatar: File): Promise<boolean> {
@@ -53,6 +54,7 @@ async function updateAvatar(avatar: File): Promise<boolean> {
 async function deleteAvatar(): Promise<boolean> {
   const response = await apiDeleteAvatar();
   if (response.status === 204) {
+    await refreshUserStorage();
     NotifyService.success('Аватар успешно удален!');
     return true;
   }
@@ -67,10 +69,19 @@ async function getUsers(data: PaginateUsersParams): Promise<PaginateUsers | null
   return null;
 }
 
+async function getUser(id: number): Promise<User | SelfUser | null> {
+  const response = await apiGetUser(id);
+  if(response.status === 200) {
+    return response.data.data;
+  }
+  return null;
+}
+
 export {
   createUser,
   updateUser,
   updateAvatar,
   deleteAvatar,
   getUsers,
+  getUser
 }

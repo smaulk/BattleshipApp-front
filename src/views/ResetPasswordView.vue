@@ -2,6 +2,7 @@
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { resetPassword } from "@/services/PasswordService.ts";
+import AppPasswordInput from "components/AppPasswordInput.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -46,17 +47,17 @@ const onResetPassword = async () => {
     <div class="app-card shadow-sm p-4">
       <h2 class="text-center mb-4 h3">Сброс пароля</h2>
       <form @submit.prevent="onResetPassword">
-        <div class="mb-3 h5">
-          <label for="password" class="form-label">Новый пароль</label>
-          <input v-model="password" type="password" class="form-control h7" id="password"
-                 placeholder="Введите новый пароль" minlength="8" required/>
+        <div class="mb-4">
+          <label for="password" class="form-label h5">Новый пароль</label>
+          <AppPasswordInput v-model="password" id="password" placeholder="Введите новый пароль"
+                         :minlength="8" :required="true"/>
         </div>
-        <div class="mb-3 h5">
-          <label for="passwordConfirmation" class="form-label">Подтверждение пароля</label>
-          <input v-model="passwordConfirmation" type="password" class="form-control h7" id="passwordConfirmation"
-                 placeholder="Повторите пароль" minlength="8" required/>
+        <div class="mb-4">
+          <label for="passwordConfirmation" class="form-label h5">Подтверждение пароля</label>
+          <AppPasswordInput v-model="passwordConfirmation" id="passwordConfirmation" placeholder="Повторите пароль"
+                         :minlength="8" :required="true"/>
         </div>
-        <button type="submit" class="btn btn-u w-100 h6">Сбросить пароль</button>
+        <button type="submit" class="btn-u w-100 h6">Сбросить пароль</button>
       </form>
     </div>
   </div>

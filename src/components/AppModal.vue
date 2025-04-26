@@ -48,7 +48,6 @@ defineExpose({ show, close });
   color: $main-color;
   padding: 30px;
   border-radius: clamp(8px, 0.5vw, 12px);
-  text-align: center;
   width: min(90%, 400px);
   box-shadow: 0 6px 15px rgba(60, 60, 60, 0.4);
   border: 2px solid $second-color;

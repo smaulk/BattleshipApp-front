@@ -1,7 +1,7 @@
 
 export enum UserListTabs {
-  Friends,
-  Incoming,
-  Outgoing,
-  Search,
+  Friends = 1,
+  Incoming = 2,
+  Outgoing = 3,
+  Search = 4,
 }

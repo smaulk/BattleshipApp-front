@@ -1,14 +1,14 @@
-import { AxiosPaginateUsers, AxiosSelfUser, CreateUser, UpdateUser } from "@/interfaces/User.ts";
+import { AxiosPaginateUsers, AxiosSelfUser, AxiosUser, CreateUserData, UpdateUserData } from "@/interfaces/User.ts";
 import { handleApiResponse } from "@/api/response.ts";
 import { request } from "@/axios.config.ts";
 import { AxiosNoContent } from "@/interfaces/AxiosResponse.ts";
 import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
 
-export async function apiCreateUser(userData: CreateUser): Promise<AxiosSelfUser> {
+export async function apiCreateUser(userData: CreateUserData): Promise<AxiosSelfUser> {
   return handleApiResponse<AxiosSelfUser>(request.post('/api/v1/users', userData));
 }
 
-export async function apiUpdateUser(userData: UpdateUser): Promise<AxiosSelfUser> {
+export async function apiUpdateUser(userData: UpdateUserData): Promise<AxiosSelfUser> {
   return handleApiResponse<AxiosSelfUser>(request.put('/api/v1/users/me', userData));
 }
 
@@ -31,4 +31,8 @@ export async function apiDeleteAvatar(): Promise<AxiosNoContent> {
 
 export async function apiGetUsers(data: PaginateUsersParams): Promise<AxiosPaginateUsers> {
   return handleApiResponse<AxiosPaginateUsers>(request.get('/api/v1/users/', {params: data }));
+}
+
+export async function apiGetUser(id: number): Promise<AxiosUser | AxiosSelfUser> {
+  return handleApiResponse<AxiosUser | AxiosSelfUser>(request.get(`/api/v1/users/${id}`));
 }

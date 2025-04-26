@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { DifficultyLevel, DifficultyLevelRU } from "@/enums/DifficultyLevel.ts";
-import Modal from "components/Modal.vue";
+import AppModal from "components/AppModal.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -13,7 +13,7 @@ window.addEventListener('auth', (event: any): void => {
 });
 
 
-const modalRef = ref<typeof Modal | null>(null);
+const modalRef = ref<typeof AppModal | null>(null);
 const showModal = (): void => {
   modalRef.value?.show();
 };
@@ -44,8 +44,8 @@ const onGameBot = (level: DifficultyLevel) => {
           </template>
           <button class="btn-u" @click="showModal">Игра с ботом</button>
 
-          <Modal ref="modalRef">
-            <p class="h4 mb-4">Выберите уровень сложности</p>
+          <AppModal ref="modalRef">
+            <p class="h4 mb-4 text-center">Выберите уровень сложности</p>
             <div class="home-btns d-flex flex-column align-items-center gap-3">
               <button class="btn-u" @click="onGameBot(DifficultyLevel.Easy)">
                 {{ DifficultyLevelRU[DifficultyLevel.Easy] }}
@@ -54,7 +54,7 @@ const onGameBot = (level: DifficultyLevel) => {
                 {{ DifficultyLevelRU[DifficultyLevel.Normal] }}
               </button>
             </div>
-          </Modal>
+          </AppModal>
         </div>
       </div>
     </div>

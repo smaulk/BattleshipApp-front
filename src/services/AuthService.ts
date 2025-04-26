@@ -30,7 +30,7 @@ function logout(): void {
   localStorage.removeItem('userId');
   localStorage.removeItem('userNickname');
   localStorage.removeItem('userAvatarUrl');
-  sendAuthEvent(null, null);
+  sendAuthEvent(null, null, null);
   Object.keys(window.Echo.connector.channels).forEach(channel => {
     window.Echo.leave(channel);
   });
@@ -65,7 +65,7 @@ async function refresh(refreshToken: string): Promise<boolean> {
 }
 
 /**
- * Сохраняет авторизационные данные: токены, ID, nickname
+ * Сохраняет данные авторизации: токены, ID, nickname, avatarUrl
  */
 function saveAuthData(data: LoginResponse): void {
   const payload: PayloadAccessToken = getPayload(data.accessToken);
@@ -74,7 +74,7 @@ function saveAuthData(data: LoginResponse): void {
   localStorage.setItem('userId', String(payload.id));
   localStorage.setItem('userNickname', String(payload.nickname));
   localStorage.setItem('userAvatarUrl', payload.avatarUrl ? String(payload.avatarUrl) : '');
-  sendAuthEvent(payload.nickname, payload.avatarUrl);
+  sendAuthEvent(payload.id, payload.nickname, payload.avatarUrl);
 
   connectOnline(payload.id);
   connectEvents(payload.id);
@@ -88,9 +88,10 @@ function getPayload(accessToken: string): PayloadAccessToken {
   return JSON.parse(decodedPayload);
 }
 
-function sendAuthEvent(nickname: string | null, avatarUrl: string | null): void {
+function sendAuthEvent(userId: number | null, nickname: string | null, avatarUrl: string | null): void {
   window.dispatchEvent(new CustomEvent('auth', {
     detail: {
+      userId: userId,
       nickname: nickname,
       avatarUrl: avatarUrl,
     }

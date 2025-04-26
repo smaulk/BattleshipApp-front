@@ -3,19 +3,30 @@ import { headerLogo } from '@/game.config.ts';
 import AppHeaderLogo from "components/AppHeaderLogo.vue";
 import AppHeaderLink from "components/AppHeaderLink.vue";
 import AppHeaderUserInfo from "components/AppHeaderUserInfo.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { logout } from "@/services/AuthService.ts";
 import { useRouter } from "vue-router";
-import Modal from "components/Modal.vue";
-import ModalActions from "components/ModalActions.vue";
+import AppModal from "components/AppModal.vue";
+import AppModalActions from "components/AppModalActions.vue";
 
 const router = useRouter();
 const nickname = ref<string | null>(localStorage.getItem('userNickname'))
-const modalRef = ref<typeof Modal | null>(null);
+const modalRef = ref<typeof AppModal | null>(null);
+
+const getUserId = (userId: string | number | null): number | null => {
+  const parsed = userId !== null ? Number(userId) : null;
+  return parsed !== null && Number.isInteger(parsed) ? parsed : null
+}
+
+const storedUserId = localStorage.getItem('userId');
+const userId = ref<number | null>(getUserId(storedUserId));
+
+const isAuth = computed(() => userId.value !== null && nickname.value !== null)
 
 // Слушатель события авторизации
 window.addEventListener('auth', (event: any): void => {
   nickname.value = event.detail.nickname;
+  userId.value = getUserId(event.detail.userId);
 });
 
 const showModal = (): void => {
@@ -31,10 +42,18 @@ const onLogout = async (): Promise<void> => {
   closeModal();
   await router.push({name: 'home'});
 }
+
+const onProfile = () => {
+  router.push({name: 'user', params: {id: userId.value}});
+}
+
+const onFriends = () => {
+  router.push({name: 'friends'});
+}
 </script>
 
 <template>
-  <nav class="navbar not-highlight" :class="nickname != null ? 'navbar-expand-lg' : 'navbar-expand-sm'">
+  <nav class="navbar navbar-expand-sm not-highlight">
     <div class="container-fluid">
       <AppHeaderLogo
           class="navbar-brand"
@@ -46,35 +65,30 @@ const onLogout = async (): Promise<void> => {
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <template v-if="nickname != null">
+      <template v-if="isAuth">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto">
-            <li class="nav-item me-5">
-              <AppHeaderLink :path="{name: 'home'}">Играть</AppHeaderLink>
+            <li class="nav-item d-sm-none">
+              <AppHeaderLink @click="onProfile">Профиль</AppHeaderLink>
             </li>
-            <li class="nav-item me-5">
-              <AppHeaderLink>Статистика</AppHeaderLink>
+            <li class="nav-item d-sm-none">
+              <AppHeaderLink @click="onFriends">Друзья</AppHeaderLink>
             </li>
-            <li class="nav-item">
-              <AppHeaderLink :path="{name: 'friends'}">Друзья</AppHeaderLink>
-            </li>
-
-            <li class="nav-item d-lg-none">
-              <AppHeaderLink>Профиль</AppHeaderLink>
-            </li>
-            <li class="nav-item d-lg-none">
+            <li class="nav-item d-sm-none">
               <AppHeaderLink @click="showModal">Выход</AppHeaderLink>
             </li>
           </ul>
         </div>
 
         <AppHeaderUserInfo
-            class="d-none d-lg-block"
+            class="d-none d-sm-block"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
             :nickname="nickname"
-            @logout="showModal"
+            @onProfile="onProfile"
+            @onFriends="onFriends"
+            @onLogout="showModal"
         />
       </template>
 
@@ -91,10 +105,10 @@ const onLogout = async (): Promise<void> => {
         </div>
       </template>
 
-      <Modal ref="modalRef">
-        <p class="h4">Выйти из аккаунта?</p>
-        <ModalActions @confirm="onLogout" @reject="closeModal"></ModalActions>
-      </Modal>
+      <AppModal ref="modalRef">
+        <p class="h4 text-center">Выйти из аккаунта?</p>
+        <AppModalActions @confirm="onLogout" @reject="closeModal"></AppModalActions>
+      </AppModal>
     </div>
   </nav>
 

@@ -29,7 +29,9 @@ export function passwordValidation(password: string, passwordConfirmation: strin
     return false;
   }
 
-  if (!validator.isAlphanumeric(password)) {
+  if (!validator.isStrongPassword(password,
+    { minLength: 8, minLowercase: 0, minUppercase: 0, minNumbers: 1, minSymbols: 0 }
+  )) {
     NotifyService.error('Пароль должен содержать как буквы, так и цифры');
     return false;
   }

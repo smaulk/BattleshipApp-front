@@ -15,16 +15,12 @@ const avatar = computed(() => avatarUrl.value || userAvatar)
 
 <template>
   <div>
-    <img
-        :src="avatar"
-        alt=""
-        class="avatar not-highlight"
-    />
+    <img :src="avatar" alt="" class="avatar not-highlight"/>
   </div>
 </template>
 
 <style scoped lang="scss">
-$avatarSize: 55px;
+$avatarSize: 60px;
 
 .avatar {
   border-radius: 25%;

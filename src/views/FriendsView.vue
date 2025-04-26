@@ -20,15 +20,17 @@ const clearQuery = (): void => {
 }
 
 const changeTab = (tab: UserListTabs): void => {
-  activeTab.value = tab;
-  clearQuery();
+  if(activeTab.value !== tab) {
+    activeTab.value = tab;
+    clearQuery();
+  }
 }
 
 </script>
 
 <template>
   <div class="friends-page mx-auto">
-    <h1 class="h2 mb-4">{{tabs[activeTab].label}}</h1>
+    <h1 class="h2 mb-4">{{tabs[activeTab - 1].label}}</h1>
 
     <ul class="nav nav-tabs mb-3 not-highlight">
       <li class="nav-item" v-for="t in tabs" :key="t.value">
