@@ -16,15 +16,15 @@ const router = useRouter();
 
 const avatar = computed(() => props.user.avatarUrl || userAvatar)
 
-const onClickUser = (user: User) => {
-  router.push({name: 'user', params: {id: String(user.id)}});
+const onClickUser = (userId: number) => {
+  router.push({name: 'user', params: {id: String(userId)}});
 }
 
 </script>
 
 <template>
   <div class="d-flex align-items-center justify-content-between p-3 user-list-item">
-    <div class="d-flex align-items-center gap-3 user-list-item-data" @click.prevent="onClickUser(user)">
+    <div class="d-flex align-items-center gap-3 user-list-item-data" @click.prevent="onClickUser(user.id)">
       <img :src="avatar" alt="avatar" class="avatar"/>
       <div class="text-dark">
         {{ user.nickname }}
@@ -33,7 +33,6 @@ const onClickUser = (user: User) => {
     </div>
 
    <FriendshipButtons
-       v-if="!user.email"
        :user="user"
        :tab-type="type"
        :remove-item="remove"
@@ -43,13 +42,19 @@ const onClickUser = (user: User) => {
 
 <style lang="scss" scoped>
 .user-list-item {
-  border-radius: 10px;
+  $border: 1px solid #5e5e5e;
   background-color: #eceeec;
-  margin-bottom: 10px;
-  border: 1px solid #5e5e5e;
+  border: $border;
+  border-top: none;
 
+  &:first-child {
+    border-top: $border;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
   &:last-child {
-    margin-bottom: 0;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 
   .user-list-item-data {

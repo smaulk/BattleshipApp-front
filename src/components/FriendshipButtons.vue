@@ -2,47 +2,56 @@
 import { FriendshipType } from "@/enums/FriendshipType.ts";
 import { UserListTabs } from "@/enums/UserListTabs.ts";
 import { User } from "@/interfaces/User.ts";
-import { acceptFriendship, createFriendship, deleteFriendship } from "@/services/FriendshipService.ts";
+import { acceptFriendship, createFriendship, deleteFriendship } from "@/services/FriendshipApiService.ts";
+import { useLoading } from "@/composables/Loading.ts";
 
 const props = defineProps<{
   user: User,
-  tabType: UserListTabs | null,
-  removeItem: ((user: User) => void)| null,
+  tabType?: UserListTabs | null,
+  removeItem?: ((user: User) => void) | null,
 }>();
 
-const isAllTypes = (tabType: UserListTabs | null): boolean => !tabType || tabType === UserListTabs.Search;
+const { unique } = useLoading();
 
-const isFriend = (type: FriendshipType | null) =>
+const isAllTypes = (tabType: UserListTabs | null | undefined): boolean => !tabType || tabType === UserListTabs.Search;
+
+const isFriend = (type: FriendshipType | null | undefined) =>
     props.tabType === UserListTabs.Friends
     || isAllTypes(props.tabType) && type === FriendshipType.FRIEND;
 
-const isIncoming = (type: FriendshipType | null) =>
+const isIncoming = (type: FriendshipType | null | undefined) =>
     props.tabType === UserListTabs.Incoming
     || isAllTypes(props.tabType) && type === FriendshipType.INCOMING;
 
-const isOutgoing = (type: FriendshipType | null) =>
+const isOutgoing = (type: FriendshipType | null | undefined) =>
     props.tabType === UserListTabs.Outgoing
     || isAllTypes(props.tabType) && type === FriendshipType.OUTGOING;
 
-const isNotFriendship = (type: FriendshipType | null) => isAllTypes(props.tabType) && type === null;
+const isNotFriendship = (type: FriendshipType | null | undefined) => isAllTypes(props.tabType) && type === null;
 
 
-const add = async (user: User) => {
-  if (await createFriendship(user.id)) {
-    changeFriendshipType(user, FriendshipType.OUTGOING);
-  }
+const add = (user: User) => {
+  unique(async () => {
+    if (await createFriendship(user.id)) {
+      changeFriendshipType(user, FriendshipType.OUTGOING);
+    }
+  }, undefined)
 }
 
-const accept = async (user: User) => {
-  if (await acceptFriendship(user.id)) {
-    changeFriendshipType(user, FriendshipType.FRIEND);
-  }
+const accept = (user: User) => {
+  unique(async () => {
+    if (await acceptFriendship(user.id)) {
+      changeFriendshipType(user, FriendshipType.FRIEND);
+    }
+  }, undefined)
 }
 
-const remove = async (user: User) => {
-  if (await deleteFriendship(user.id)) {
-    changeFriendshipType(user, null);
-  }
+const remove = (user: User) => {
+  unique(async () => {
+    if (await deleteFriendship(user.id)) {
+      changeFriendshipType(user, null);
+    }
+  }, undefined)
 }
 
 const changeFriendshipType = (user: User, type: FriendshipType | null) => {

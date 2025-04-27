@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+const { beforeClose } = defineProps<{
+  beforeClose?: () => void;
+}>();
+
 const isVisible = ref<boolean>(false);
 
 const show = (): void => {
@@ -8,6 +12,9 @@ const show = (): void => {
 };
 
 const close = (): void => {
+  if (beforeClose !== undefined) {
+    beforeClose();
+  }
   isVisible.value = false;
 };
 

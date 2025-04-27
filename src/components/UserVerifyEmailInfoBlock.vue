@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { sendEmailVerification } from "@/services/EmailService.ts";
+import { sendEmailVerification } from "@/services/EmailApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 
 const { unique } = useLoading();

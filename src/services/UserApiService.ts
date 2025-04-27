@@ -2,7 +2,7 @@ import { CreateUserData, PaginateUsers, SelfUser, UpdateUserData, User } from "@
 import NotifyService from "@/services/NotifyService.ts";
 import { apiCreateUser, apiDeleteAvatar, apiGetUser, apiGetUsers, apiUpdateAvatar, apiUpdateUser } from "@/api/user.ts";
 import { emailValidation, nicknameValidation, passwordValidation } from "@/services/ValidationService.ts";
-import { refresh } from "@/services/AuthService.ts"
+import { refresh } from "@/services/AuthApiService.ts"
 import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
 
 async function refreshUserStorage(): Promise<void> {

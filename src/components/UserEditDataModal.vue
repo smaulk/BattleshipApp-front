@@ -3,7 +3,7 @@
 import AppModal from "components/AppModal.vue";
 import { ref } from "vue";
 import { SelfUser } from "@/interfaces/User.ts";
-import { updateUser } from "@/services/UserService.ts";
+import { updateUser } from "@/services/UserApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 
 const { unique } = useLoading();
@@ -12,7 +12,7 @@ const {user} = defineProps<{
   user: SelfUser
 }>();
 
-const modalEditDataRef = ref<typeof AppModal | null>(null);
+const modalRef = ref<typeof AppModal | null>(null);
 
 const newNickname = ref<string>('');
 const newEmail = ref<string>('');
@@ -20,7 +20,7 @@ const newEmail = ref<string>('');
 const show = () => {
   newNickname.value = user.nickname || '';
   newEmail.value = user.email || '';
-  modalEditDataRef.value?.show();
+  modalRef.value?.show();
 }
 
 defineExpose({ show });
@@ -29,7 +29,7 @@ const updateUserData = (event: Event) => {
   event.preventDefault()
 
   if (newNickname.value === user.nickname && newEmail.value === user.email) {
-    modalEditDataRef.value?.close();
+    modalRef.value?.close();
     return;
   }
 
@@ -41,13 +41,13 @@ const updateUserData = (event: Event) => {
 
     user.nickname = result.nickname;
     user.email = result.email;
-    modalEditDataRef.value?.close();
+    modalRef.value?.close();
   }, undefined)
 }
 </script>
 
 <template>
-  <AppModal ref="modalEditDataRef">
+  <AppModal ref="modalRef">
     <form @submit.prevent="updateUserData">
       <div class="mb-4">
         <label for="nickname" class="form-label h5">Никнейм</label>

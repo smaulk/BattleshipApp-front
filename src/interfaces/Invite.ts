@@ -5,7 +5,7 @@ export interface UserInvite {
   friendId: number;
   nickname: string;
   avatarUrl: string | null;
-  invited_at: string;
+  invitedAt: number;
 }
 
 export type PaginateInvites = PaginateCollection<UserInvite>;

@@ -3,11 +3,11 @@ import UserListItem from './UserListItem.vue'
 import { UserListTabs } from "@/enums/UserListTabs.ts";
 import { useList } from "@/composables/List.ts";
 import { PaginateUsers, User } from "@/interfaces/User.ts";
-import { getFriends, getInRequests, getOutRequests } from "@/services/FriendshipService.ts";
+import { getFriends, getInRequests, getOutRequests } from "@/services/FriendshipApiService.ts";
 import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
 import { useLoading } from "@/composables/Loading.ts";
 import { ref, watch } from "vue";
-import { getUsers } from "@/services/UserService.ts";
+import { getUsers } from "@/services/UserApiService.ts";
 
 const props = defineProps<{
   type: UserListTabs
@@ -43,7 +43,7 @@ const {
   }),
 });
 
-const getUsersForType = async (data: PaginateUsersParams) => {
+const getUsersForType = async (data: PaginateUsersParams): Promise<PaginateUsers | null> => {
   if (props.type === UserListTabs.Friends) {
     return await getFriends(data);
   }

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { login } from "@/services/AuthService.ts";
+import { login } from "@/services/AuthApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 import { useRouter } from "vue-router";
 import AppModal from "components/AppModal.vue";
-import { forgotPassword } from "@/services/PasswordService.ts";
+import { forgotPassword } from "@/services/PasswordApiService.ts";
 import AppModalActions from "components/AppModalActions.vue";
 import AppPasswordInput from "components/AppPasswordInput.vue";
 

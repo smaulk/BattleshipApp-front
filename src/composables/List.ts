@@ -3,7 +3,7 @@ import { User } from "@/interfaces/User";
 import { PaginateCollection } from "@/interfaces/Paginate.ts";
 
 interface Params<T> {
-  itemsGetter: (lastId: number | null) => Promise<T | null>,
+  itemsGetter: (lastId: number | null) => Promise<PaginateCollection<T> | null>,
 }
 
 interface Return<T> {
@@ -18,7 +18,7 @@ interface Return<T> {
  * Функция для работы с динамически подгружаемыми списками
  * @param itemsGetter Функция для получения новых элементов списка
  */
-export function useList<T = User>({ itemsGetter }: Params<PaginateCollection<T>>): Return<T> {
+export function useList<T = User>({ itemsGetter }: Params<T>): Return<T> {
   // HTML список элементов
   const itemsList = ref<HTMLDivElement | null>(null);
   // Список элеиментов

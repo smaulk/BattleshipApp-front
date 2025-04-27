@@ -1,7 +1,7 @@
 import Notify from "@/composables/Notify.ts";
 import { NotifyType } from "@/enums/NotifyType.ts";
-import { acceptFriendship, deleteFriendship } from "@/services/FriendshipService.ts";
-import { acceptInvite, deleteInvite } from "@/services/InviteService.ts";
+import { acceptFriendship, deleteFriendship } from "@/services/FriendshipApiService.ts";
+import { acceptInvite, deleteInvite } from "@/services/InviteApiService.ts";
 
 export default class NotifyService {
 

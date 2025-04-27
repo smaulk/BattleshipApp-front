@@ -29,7 +29,7 @@ export interface User {
   nickname: string,
   avatarUrl: string | null,
   isOnline: boolean,
-  friendshipType: FriendshipType | null,
+  friendshipType: FriendshipType | null | undefined,
   statistic: Statistic,
 }
 

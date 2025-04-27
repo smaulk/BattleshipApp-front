@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { deleteAvatar, updateAvatar } from "@/services/UserService.ts";
+import { deleteAvatar, updateAvatar } from "@/services/UserApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { userAvatar } from "@/game.config.ts";
 import { SelfUser, User } from "@/interfaces/User.ts";
+import AppModal from "components/AppModal.vue";
+import AppModalActions from "components/AppModalActions.vue";
 
 const { unique } = useLoading();
 
@@ -15,7 +17,7 @@ const { user } = defineProps<{
 const avatarUrl = computed(() => user?.avatarUrl || userAvatar);
 
 window.addEventListener('auth', (event: any): void => {
-    user.avatarUrl = event.detail.avatarUrl;
+  user.avatarUrl = event.detail.avatarUrl;
 });
 
 const onSelectAvatar = (): void => {
@@ -27,18 +29,29 @@ const onSelectAvatar = (): void => {
   input.click();
 };
 
-function onUploadAvatar(event: Event) {
+const onUploadAvatar = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.item(0);
-  if (!file) {
-    return;
+  if (file) {
+    updateAvatar(file);
   }
-
-  updateAvatar(file);
 }
 
-function onRemoveAvatar() {
+const removeAvatarModalRef = ref<typeof AppModal | null>(null);
+
+const showRemoveAvatarModal = () => {
+  removeAvatarModalRef.value?.show();
+}
+
+const closeRemoveAvatarModal = () => {
+  removeAvatarModalRef.value?.close();
+}
+
+const removeAvatar = () => {
   unique(async () => {
-    await deleteAvatar();
+    const result = await deleteAvatar();
+    if (result) {
+      closeRemoveAvatarModal();
+    }
   }, undefined)
 }
 </script>
@@ -52,9 +65,14 @@ function onRemoveAvatar() {
         <span>📤</span>
       </button>
 
-      <button v-if="user?.avatarUrl" class="avatar-button" @click="onRemoveAvatar">
+      <button v-if="user?.avatarUrl" class="avatar-button" @click="showRemoveAvatarModal">
         <span>🗑️</span>
       </button>
+
+      <AppModal ref="removeAvatarModalRef">
+        <p class="text-center h6">Удалить аватар?</p>
+        <AppModalActions @confirm="removeAvatar" @reject="closeRemoveAvatarModal"/>
+      </AppModal>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig, AxiosInstance} from "axios";
-import { checkAuth } from "@/services/AuthService.ts";
+import { checkAuth } from "@/services/AuthApiService.ts";
 import NotifyService from "@/services/NotifyService.ts";
 
 const host: string = import.meta.env.VITE_HOST ?? 'http://127.0.0.1'

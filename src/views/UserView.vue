@@ -2,7 +2,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ComputedRef, onMounted, ref } from "vue";
 import { SelfUser, User } from "@/interfaces/User.ts";
-import { getUser } from "@/services/UserService.ts";
+import { getUser } from "@/services/UserApiService.ts";
 import FriendshipButtons from "components/FriendshipButtons.vue";
 import { FriendshipType } from "@/enums/FriendshipType.ts";
 import UserStatistic from "components/UserStatistic.vue";
@@ -80,11 +80,7 @@ const onEditUserPassword = () => {
 
       <div v-else-if="(user as User)?.friendshipType !== undefined" class="ms-5 d-flex flex-column align-items-end">
         <p class="h7">{{ getFriendshipDesc((user as User).friendshipType) }}</p>
-        <FriendshipButtons
-            :user="user as User"
-            :tab-type="null"
-            :remove-item="null"
-        />
+        <FriendshipButtons :user="user as User"/>
       </div>
     </div>
 

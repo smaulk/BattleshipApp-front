@@ -24,3 +24,7 @@ export async function apiGetInInvites(startId: number | null): Promise<AxiosPagi
   return handleApiResponse<AxiosPaginateInvites>(request
     .get('/api/v1/users/me/in-invites', { params: { startId } }));
 }
+
+export async function apiDeleteAllInvites(): Promise<AxiosNoContent> {
+  return handleApiResponse<AxiosNoContent>(request.delete('/api/v1/users/me/invites'));
+}

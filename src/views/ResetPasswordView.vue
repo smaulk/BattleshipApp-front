@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-import { resetPassword } from "@/services/PasswordService.ts";
+import { resetPassword } from "@/services/PasswordApiService.ts";
 import AppPasswordInput from "components/AppPasswordInput.vue";
 
 const route = useRoute();

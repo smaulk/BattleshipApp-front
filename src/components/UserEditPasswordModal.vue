@@ -3,15 +3,15 @@
 import AppModal from "components/AppModal.vue";
 import AppPasswordInput from "components/AppPasswordInput.vue";
 import { ref } from "vue";
-import { updatePassword } from "@/services/PasswordService.ts";
-import { logout } from "@/services/AuthService.ts";
+import { updatePassword } from "@/services/PasswordApiService.ts";
+import { logout } from "@/services/AuthApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 import { useRouter } from "vue-router";
 
 const { unique } = useLoading();
 const router = useRouter();
 
-const modalEditPasswordRef = ref<typeof AppModal | null>(null);
+const modalRef = ref<typeof AppModal | null>(null);
 
 const currentPassword = ref<string>('');
 const newPassword = ref<string>('');
@@ -21,7 +21,7 @@ const show = () => {
   currentPassword.value = '';
   newPassword.value = '';
   newPasswordConfirm.value = '';
-  modalEditPasswordRef.value?.show();
+  modalRef.value?.show();
 }
 
 defineExpose({ show });
@@ -38,7 +38,7 @@ const updateUserPassword = (event: Event) => {
 
     if (response) {
       logout();
-      modalEditPasswordRef.value?.close();
+      modalRef.value?.close();
       await router.push({ name: 'login' });
     }
   }, undefined)
@@ -46,7 +46,7 @@ const updateUserPassword = (event: Event) => {
 </script>
 
 <template>
-  <AppModal ref="modalEditPasswordRef">
+  <AppModal ref="modalRef">
     <form @submit.prevent="updateUserPassword">
       <div class="mb-4">
         <label for="currentPassword" class="form-label h5">Текущий пароль</label>

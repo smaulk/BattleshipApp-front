@@ -3,7 +3,7 @@ import auth from "@/routes/auth.ts";
 import url from "@/routes/url.ts";
 import main from "@/routes/main.ts";
 import game from '@/routes/game.ts'
-import { checkAuth } from "@/services/AuthService.ts";
+import { checkAuth } from "@/services/AuthApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 
 const { unique } = useLoading();

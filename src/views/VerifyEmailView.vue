@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { VerifyEmail } from "@/interfaces/Email.ts";
-import { verifyEmail } from "@/services/EmailService.ts";
+import { verifyEmail } from "@/services/EmailApiService.ts";
 
 const route = useRoute();
 const isVerified = ref<boolean | null>(null);

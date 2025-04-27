@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import { login } from "@/services/AuthService.ts";
-import { createUser } from "@/services/UserService.ts";
+import { login } from "@/services/AuthApiService.ts";
+import { createUser } from "@/services/UserApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 import { useRouter } from "vue-router";
 import AppPasswordInput from "components/AppPasswordInput.vue";
