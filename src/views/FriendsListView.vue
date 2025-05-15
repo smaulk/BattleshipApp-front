@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import UserList from "components/UserList.vue";
 import { UserListTabs } from "@/enums/UserListTabs.ts";
+import AppSearchInput from "components/AppSearchInput.vue";
 
 const tabs = [
   { label: 'Друзья', value: UserListTabs.Friends },
@@ -15,14 +16,10 @@ const query = ref<string>('');
 
 const userList = ref<typeof UserList | null>(null);
 
-const clearQuery = (): void => {
-  query.value = '';
-}
-
 const changeTab = (tab: UserListTabs): void => {
   if(activeTab.value !== tab) {
     activeTab.value = tab;
-    clearQuery();
+    query.value = '';
   }
 }
 
@@ -45,21 +42,8 @@ const changeTab = (tab: UserListTabs): void => {
       </li>
     </ul>
 
-    <div class="mb-3">
-      <div class="input-group">
-        <input
-            type="text"
-            class="form-control"
-            placeholder="Поиск..."
-            v-model="query"
-        />
-        <button v-if="query !== ''" class="btn btn-light bg-white btn-input" type="button" @click="clearQuery">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <UserList ref="userList" :type="activeTab" :query="query" />
+    <AppSearchInput v-model="query"/>
+    <UserList ref="userList" :type="activeTab" :query="query"/>
   </div>
 </template>
 

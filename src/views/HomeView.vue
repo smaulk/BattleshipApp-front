@@ -6,6 +6,7 @@ import { useRouter } from "vue-router";
 import GameSearchModal from "components/GameSearchModal.vue";
 import { useLoading } from "@/composables/Loading.ts";
 import { createRoom } from "@/services/RoomApiService.ts";
+import { GameMode } from "@/enums/GameMode.ts";
 
 const router = useRouter();
 const { unique } = useLoading();
@@ -27,7 +28,7 @@ const closeBotGameModal = (): void => {
 
 const onGameBot = (level: DifficultyLevel) => {
   closeBotGameModal();
-  router.push({name: 'game', query: {difficulty: level}});
+  router.push({ name: 'play', query: { mode: GameMode.BOT, difficulty: level } });
 }
 
 const searchGameModalRef = ref<typeof GameSearchModal | null>(null);
@@ -38,16 +39,16 @@ const onSearchGame = () => {
 const onCreateLinkGame = () => {
   unique(async () => {
     const roomId = await createRoom();
-    if(!roomId) {
+    if (!roomId) {
       return;
     }
 
-    await router.push({ name: 'game', query: { room: roomId, link: 1} })
+    await router.push({ name: 'play', query: { mode: GameMode.LINK, roomId: roomId } });
   }, undefined)
 }
 
 const onFriendGame = () => {
-  router.push({name: 'invites'});
+  router.push({ name: 'invites' });
 }
 
 </script>

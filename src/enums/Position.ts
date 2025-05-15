@@ -2,6 +2,6 @@
  * Позиция корабля
  */
 export enum Position {
-  Horizontal = 'horizontal',
-  Vertical = 'vertical'
+  HORIZONTAL = 1,
+  VERTICAL = 2,
 }

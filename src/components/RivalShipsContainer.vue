@@ -23,7 +23,7 @@ const remainingCount = (size: number): number | null => {
 
         <div
             :class="['ship', 'static', remainingCount(size) === 0 ? 'ship-destroyed': null]"
-            :data-position="Position.Horizontal"
+            :data-position="Position.HORIZONTAL"
             :data-size="size"
         >
           <span class="symbol"></span>

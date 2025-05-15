@@ -78,7 +78,7 @@ export default class ShipsCounterService {
     // Функция для добавления кораблей определенного размера
     const addShips = (size: number, count: number) => {
       for (let i = 0; i < count; i++) {
-        let ship: ShipData = { id: id++, size: size, position: Position.Horizontal }
+        let ship: ShipData = { id: id++, size: size, position: Position.HORIZONTAL }
         ships.push(ship);
       }
     }

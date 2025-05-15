@@ -1,39 +1,47 @@
 <script setup lang="ts">
-
-import { User } from "@/interfaces/User.ts";
+import { UserInvite } from "@/interfaces/Invite.ts";
 import { useRouter } from "vue-router";
 import { computed } from "vue";
 import { userAvatar } from "@/game.config.ts";
-
-const props = defineProps<{
-  user: User,
-}>();
+import { InviteListTabs } from "@/enums/InviteListTabs.ts";
+import InviteButtons from "components/InviteButtons.vue";
+import { formatRelativeTime } from "@/helpers";
 
 const router = useRouter();
 
-const avatar = computed(() => props.user.avatarUrl || userAvatar)
+const props = defineProps<{
+  invite: UserInvite,
+  type: InviteListTabs,
+  remove: (invite: UserInvite) => void,
+}>();
+
+const avatar = computed(() => props.invite.avatarUrl || userAvatar)
+
+const invitedDate = computed(() => formatRelativeTime(props.invite.invitedAt));
 
 const onClickUser = (userId: number) => {
-  router.push({name: 'user', params: {userId: String(userId)}});
+  router.push({ name: 'user', params: { userId: String(userId) } });
 }
 </script>
 
 <template>
-  <div class="d-flex align-items-center justify-content-between p-3 user-list-item">
-    <div class="d-flex align-items-center gap-3 user-list-item-data" @click.prevent="onClickUser(user.id)">
+  <div class="d-flex align-items-center justify-content-between p-3 invite-list-item">
+    <div class="d-flex align-items-center gap-3 invite-list-item-data" @click.prevent="onClickUser(invite.friendId)">
       <img :src="avatar" alt="avatar" class="avatar"/>
-      <div class="text-dark">
-        {{ user.nickname }}
-        <span :class="['status-indicator', user.isOnline ? 'online' : 'offline']"></span>
+      <div class="d-flex flex-column justify-content-center">
+        <span class="text-dark">{{ invite.nickname }}</span>
+        <span class="text-muted">{{ invitedDate }}</span>
       </div>
     </div>
-    <slot></slot>
+
+    <InviteButtons :invite="invite" :tab-type="type" :remove-item="remove" />
   </div>
 </template>
 
 <style scoped lang="scss">
-.user-list-item {
-  $border: 1px solid #5e5e5e;
+
+.invite-list-item {
+  $border: 2px solid $second-color;
   background-color: $list-item-color;
   border: $border;
   border-top: none;
@@ -43,34 +51,15 @@ const onClickUser = (userId: number) => {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
   }
+
   &:last-child {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   }
 
-  .user-list-item-data {
+  .invite-list-item-data {
     cursor: pointer;
   }
-}
-
-.status-indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-left: 3px;
-}
-
-.online {
-  background-color: #04bd04;
-}
-.offline {
-  background-color: #6c757d;
-}
-
-.text-dark {
-  color: black;
-  font-weight: bold;
 }
 
 $avatarSize: 50px;
@@ -98,4 +87,5 @@ $avatarSize: 50px;
     transform: scale(1);
   }
 }
+
 </style>

@@ -2,7 +2,7 @@ import { apiLogin, apiRefresh } from "@/api/auth";
 import { AxiosLogin, LoginResponse, PayloadAccessToken } from "@/interfaces/Auth";
 import NotifyService from "@/services/NotifyService.ts";
 import { emailValidation, expValidation } from "@/services/ValidationService.ts";
-import { connectEvents, connectOnline } from "@/helpers/socket.ts";
+import { connectChannelEvents, connectChannelOnline } from "@/helpers/socket.ts";
 
 /**
  * Авторизация
@@ -76,8 +76,8 @@ function saveAuthData(data: LoginResponse): void {
   localStorage.setItem('userAvatarUrl', payload.avatarUrl ? String(payload.avatarUrl) : '');
   sendAuthEvent(payload.id, payload.nickname, payload.avatarUrl);
 
-  connectOnline(payload.id);
-  connectEvents(payload.id);
+  connectChannelOnline(payload.id);
+  connectChannelEvents(payload.id);
 }
 
 /**

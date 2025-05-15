@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import AppHeader from "components/AppHeader.vue";
 import AppNotify from "components/AppNotify.vue";
-import { connectEvents, connectOnline } from "@/helpers/socket.ts";
+import { connectChannelEvents, connectChannelOnline } from "@/helpers/socket.ts";
 
 const userId = +(localStorage.getItem('userId') || 0);
-connectOnline(userId);
-connectEvents(userId);
+connectChannelOnline(userId);
+connectChannelEvents(userId);
 
 </script>
 

@@ -6,6 +6,7 @@ defineProps<{ nickname: string }>();
 defineEmits<{
   (event: 'onProfile'): void;
   (event: 'onFriends'): void;
+  (event: 'onGames'): void;
   (event: 'onLogout'): void;
 }>();
 </script>
@@ -25,6 +26,9 @@ defineEmits<{
       </li>
       <li role="menuitem">
         <button class="button menu-button" @click="$emit('onFriends')">Друзья</button>
+      </li>
+      <li role="menuitem">
+        <button class="button menu-button" @click="$emit('onGames')">Игры</button>
       </li>
       <li role="menuitem">
         <button class="button menu-button" @click="$emit('onLogout')">Выход</button>

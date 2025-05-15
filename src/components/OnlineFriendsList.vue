@@ -1,22 +1,19 @@
 <script setup lang="ts">
-import { UserListTabs } from "@/enums/UserListTabs.ts";
-import { useList } from "@/composables/List.ts";
-import { PaginateUsers, User } from "@/interfaces/User.ts";
-import { getFriends, getInRequests, getOutRequests } from "@/services/FriendshipApiService.ts";
-import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
+
 import { useLoading } from "@/composables/Loading.ts";
 import { ref, watch } from "vue";
-import { getUsers } from "@/services/UserApiService.ts";
-import FriendshipButtons from "components/FriendshipButtons.vue";
+import { useList } from "@/composables/List.ts";
+import { getFriends } from "@/services/FriendshipApiService.ts";
+import { PaginateUsers, User } from "@/interfaces/User.ts";
 import UserListItem from "components/UserListItem.vue";
-
-const props = defineProps<{
-  type: UserListTabs
-  query: string
-}>()
+import { createInvite } from "@/services/InviteApiService.ts";
 
 const { unique } = useLoading();
 const isLoaded = ref<boolean>(false);
+
+const props = defineProps<{
+  query: string
+}>();
 
 let oldQuery = props.query.trim();
 watch(() => props.query, () => {
@@ -26,10 +23,6 @@ watch(() => props.query, () => {
   oldQuery = props.query.trim();
 });
 
-watch(() => props.type, () => {
-  search();
-})
-
 const {
   itemsList,
   items,
@@ -37,29 +30,13 @@ const {
   reset,
   removeItem,
 } = useList<User>({
-  itemsGetter: (lastId: number | null): Promise<PaginateUsers | null> => getUsersForType({
+  itemsGetter: (lastId: number | null): Promise<PaginateUsers | null> => getFriends({
     startId: lastId,
     nickname: props.query.trim(),
-    isOnline: null,
+    isOnline: true,
   }),
 });
 
-const getUsersForType = async (data: PaginateUsersParams): Promise<PaginateUsers | null> => {
-  if (props.type === UserListTabs.Friends) {
-    return await getFriends(data);
-  }
-  if (props.type === UserListTabs.Outgoing) {
-    return await getOutRequests(data);
-  }
-  if (props.type === UserListTabs.Incoming) {
-    return await getInRequests(data);
-  }
-  if (props.type === UserListTabs.Search && props.query.trim() !== '') {
-    return await getUsers(data);
-  }
-
-  return null;
-}
 
 const search = (): void => {
   unique(async () => {
@@ -69,8 +46,14 @@ const search = (): void => {
     isLoaded.value = true;
   }, undefined)
 }
+
 search();
 
+const onInviteFriend = (id: number): void => {
+  unique(async () => {
+    await createInvite(id);
+  }, undefined)
+}
 </script>
 
 <template>
@@ -79,17 +62,13 @@ search();
       Ничего не найдено
     </div>
 
-    <div v-show="items.length" class="user-list-container" ref="itemsList">
+    <div v-show="items.length" class="invites-list-container" ref="itemsList">
       <transition-group :name="isLoaded ? 'fade-scale' : ''" tag="div">
         <UserListItem
             v-for="user in items"
             :key="user.id"
             :user="user">
-          <FriendshipButtons
-              :user="user"
-              :tab-type="type"
-              :remove-item="removeItem"
-          />
+          <button class="btn btn-primary" @click="onInviteFriend(user.id)">Пригласить</button>
         </UserListItem>
       </transition-group>
     </div>
@@ -97,7 +76,7 @@ search();
 </template>
 
 <style scoped lang="scss">
-.user-list-container {
+.invites-list-container {
   max-height: 65vh;
   overflow-y: auto;
   display: flex;

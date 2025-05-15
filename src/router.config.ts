@@ -18,7 +18,7 @@ const router: Router = createRouter({
 });
 
 const onlyGuestRoutes = ['login', 'register', 'reset-password'];
-const onlyLoggedRoutes = ['settings', 'friends', 'statistics']
+const onlyLoggedRoutes = ['friends', 'games', 'invites' ];
 
 router.beforeEach(async (
   to: RouteLocationNormalized,

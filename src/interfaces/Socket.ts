@@ -9,3 +9,12 @@ export interface CreateRoom {
   uid2: number,
   roomId: string,
 }
+
+export interface CreateGame {
+  gameId: number,
+  firstPlayerId: number,
+}
+
+export interface EndGame {
+  status: boolean,
+}

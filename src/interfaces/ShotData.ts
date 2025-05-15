@@ -7,7 +7,7 @@ import { ShipData } from "@/interfaces/ShipData.ts";
  */
 export interface ShotData {
   //Статус выстрела
-  shot: ShotStatus,
+  status: ShotStatus,
   //Подбитый корабль
   ship: ShipData | null,
   //Первая клетка корабля

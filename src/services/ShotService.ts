@@ -39,15 +39,15 @@ export default class ShotService extends CellsMatrixService {
       if (shipData) {
         this._hitsOnShips[shipId]++;
         let startCellData = null;
-        let shot = ShotStatus.Hit;
+        let shot = ShotStatus.HIT;
         //Если корабль уничтожен
         if (this._hitsOnShips[shipId] === shipData.size) {
           startCellData = getStartCellShip(this.cells, shipId);
-          shot = ShotStatus.Destroyed;
+          shot = ShotStatus.DESTROYED;
           this.addDestroyedShip();
         }
         return {
-          shot: shot,
+          status: shot,
           ship: shipData,
           startCell: startCellData,
         };
@@ -55,7 +55,7 @@ export default class ShotService extends CellsMatrixService {
     }
     //Возвращаем промах
     return {
-      shot: ShotStatus.Miss,
+      status: ShotStatus.MISS,
       ship: null,
       startCell: null
     };

@@ -5,10 +5,9 @@ import { computed } from "vue";
 const { gameInfo } = defineProps({
   gameInfo: Number,
 })
-const emits = defineEmits(['reloadGame']);
 
 const gameInfoClass = computed(() => {
-  return gameInfo === GameStatus.UserWin ? 'modal-win' : 'modal-lost'
+  return gameInfo === GameStatus.WIN ? 'modal-win' : 'modal-lost'
 })
 
 </script>
@@ -20,7 +19,7 @@ const gameInfoClass = computed(() => {
         class="game-end-modal col-10 col-lg-6"
     >
       <div class="modal-content">
-        <p v-if="gameInfo === GameStatus.UserWin">Вы победили!</p>
+        <p v-if="gameInfo === GameStatus.WIN">Вы победили!</p>
         <p v-else>Вы проиграли <span class="text-nowrap">:(</span></p>
       </div>
 
@@ -29,11 +28,6 @@ const gameInfoClass = computed(() => {
         <div class="col-12 col-lg-5">
           <button class="btn btn-dark" @click="$router.push({name: 'home'})"
           >На главную
-          </button>
-        </div>
-        <div class="col-12 col-lg-5">
-          <button class="btn btn-dark" @click="emits('reloadGame')"
-          >Играть снова
           </button>
         </div>
       </div>

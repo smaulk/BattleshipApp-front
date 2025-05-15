@@ -19,7 +19,7 @@ export default class BotService extends ShotService {
   //Уровень сложности бота
   private readonly difficultyLevel: DifficultyLevel = DifficultyLevel.Normal;
 
-  constructor(difficultyLevel: DifficultyLevel) {
+  constructor(difficultyLevel: DifficultyLevel | null) {
     super(
       new RandomCellsService()
         .getRandomBattlefieldData(
@@ -27,7 +27,7 @@ export default class BotService extends ShotService {
         ) as BattlefieldData
     );
     this._shotCellService = new ShotCellsMatrixService();
-    this.difficultyLevel = difficultyLevel;
+    this.difficultyLevel = difficultyLevel || DifficultyLevel.Normal;
   }
 
   /**
@@ -59,11 +59,11 @@ export default class BotService extends ShotService {
    */
   public setBotShotData(cellData: ColRowData, shotData: ShotData): void {
     //Если попадание
-    if (shotData.shot === ShotStatus.Hit) {
+    if (shotData.status === ShotStatus.HIT) {
       this.historyHitCells.push(cellData);
     }
     //Если корабль уничтожен
-    else if (shotData.shot === ShotStatus.Destroyed) {
+    else if (shotData.status === ShotStatus.DESTROYED) {
       //Обнуляем историю, и если есть пустые клетки вокруг корабля, записываем их в матрицу
       this.historyHitCells.length = 0;
       if (shotData.startCell && shotData.ship) {

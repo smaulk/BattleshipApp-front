@@ -1,7 +1,7 @@
 
 const HomeView = () => import('views/HomeView.vue');
 const NotFoundView = () => import('views/NotFoundView.vue');
-const FriendsView = () => import('views/FriendsView.vue');
+const FriendsListView = () => import('views/FriendsListView.vue');
 const UserView = () => import('views/UserView.vue');
 
 export default [
@@ -13,12 +13,13 @@ export default [
   {
     name: 'friends',
     path: '/friends',
-    component: FriendsView,
+    component: FriendsListView,
   },
   {
     name: 'user',
-    path: '/users/:id',
+    path: '/users/:userId',
     component: UserView,
+    props: true,
   },
   {
     name: '404',

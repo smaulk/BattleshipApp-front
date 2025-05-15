@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { computed, ComputedRef, onMounted, ref } from "vue";
 import { SelfUser, User } from "@/interfaces/User.ts";
 import { getUser } from "@/services/UserApiService.ts";
@@ -11,19 +11,22 @@ import UserEditPasswordModal from "components/UserEditPasswordModal.vue";
 import UserAvatar from "components/UserAvatar.vue";
 import UserVerifyEmailInfoBlock from "components/UserVerifyEmailInfoBlock.vue";
 
-const route = useRoute()
 const router = useRouter();
 
-const userId = Number(route.params.id);
+const props = defineProps<{
+  userId: number
+}>();
+
 const user = ref<User | SelfUser | null>(null);
 
 function isSelfUser(user: User | SelfUser): user is SelfUser {
   return (user as SelfUser).email !== undefined;
 }
+
 const isSelf: ComputedRef<boolean> = computed(() => user.value !== null && isSelfUser(user.value))
 
 onMounted(async () => {
-  user.value = await getUser(userId);
+  user.value = await getUser(props.userId);
   if (!user.value) {
     await router.push({ name: '404' });
   }
@@ -52,11 +55,11 @@ const onEditUserPassword = () => {
 
 <template>
   <div v-if="user" class="user-page p-4">
-    <UserVerifyEmailInfoBlock v-if="isSelf && !(user as SelfUser).isVerified" />
+    <UserVerifyEmailInfoBlock v-if="isSelf && !(user as SelfUser).isVerified"/>
 
     <div class="user-info-block d-flex justify-content-between align-items-center mb-4">
       <div class="d-flex align-items-center gap-3">
-        <UserAvatar :user="user" :is-self="isSelf" />
+        <UserAvatar :user="user" :is-self="isSelf"/>
 
         <div>
           <p class="mb-0 h2">{{ user.nickname }}</p>
@@ -74,8 +77,8 @@ const onEditUserPassword = () => {
           Сменить пароль
         </button>
 
-        <UserEditDataModal ref="userEditDataModalRef" :user="user as SelfUser" />
-        <UserEditPasswordModal ref="userEditPasswordModalRef" />
+        <UserEditDataModal ref="userEditDataModalRef" :user="user as SelfUser"/>
+        <UserEditPasswordModal ref="userEditPasswordModalRef"/>
       </div>
 
       <div v-else-if="(user as User)?.friendshipType !== undefined" class="ms-5 d-flex flex-column align-items-end">

@@ -24,12 +24,8 @@ defineProps<{
         <td class="text-end text-danger">{{ statistic.losses }}</td>
       </tr>
       <tr>
-        <th class="text-start">Ничьи</th>
-        <td class="text-end text-secondary">{{ statistic.draws }}</td>
-      </tr>
-      <tr>
         <th class="text-start">Очки</th>
-        <td class="text-end fw-bold">{{ statistic.points }}</td>
+        <td class="text-end text-warning fw-bold">{{ statistic.points }}</td>
       </tr>
       </tbody>
     </table>

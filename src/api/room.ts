@@ -1,4 +1,4 @@
-import { AxiosRoom } from "@/interfaces/Room.ts";
+import { AxiosJoinRoom, AxiosRoom } from "@/interfaces/Room.ts";
 import { handleApiResponse } from "@/api/response.ts";
 import { request } from "@/axios.config.ts";
 import { AxiosNoContent } from "@/interfaces/AxiosResponse.ts";
@@ -7,8 +7,8 @@ export async function apiCreateRoom(): Promise<AxiosRoom> {
   return handleApiResponse<AxiosRoom>(request.post('/api/v1/rooms'))
 }
 
-export async function apiJoinRoom(roomId: string): Promise<AxiosNoContent> {
-  return handleApiResponse<AxiosNoContent>(request.post(`/api/v1/rooms/${roomId}/join`))
+export async function apiJoinRoom(roomId: string): Promise<AxiosJoinRoom> {
+  return handleApiResponse<AxiosJoinRoom>(request.post(`/api/v1/rooms/${roomId}/join`))
 }
 
 export async function apiStartSearchRoom(): Promise<AxiosNoContent> {

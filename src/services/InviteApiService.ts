@@ -7,10 +7,15 @@ import {
   apiGetOutInvites
 } from "@/api/invite.ts";
 import { PaginateInvites } from "@/interfaces/Invite.ts";
+import NotifyService from "@/services/NotifyService.ts";
 
 async function createInvite(friendId: number): Promise<boolean> {
   const response = await apiCreateInvite(friendId);
-  return response.status === 201;
+  if(response.status === 201) {
+    NotifyService.success('Приглашение отправлено!');
+    return true;
+  }
+  return false;
 }
 
 async function acceptInvite(friendId: number): Promise<boolean> {

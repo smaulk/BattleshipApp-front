@@ -2,7 +2,7 @@
  * Статус выстрела
  */
 export enum ShotStatus {
-  Miss,
-  Hit,
-  Destroyed,
+  MISS = 1,
+  HIT = 2,
+  DESTROYED = 3,
 }

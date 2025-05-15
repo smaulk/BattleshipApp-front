@@ -11,7 +11,7 @@ const shipData: ShipData = props.shipData as ShipData;
   <div
       :key="shipData.id"
       :data-id="shipData.id"
-      :data-position="shipData.position"
+      :data-position="shipData.position.toString()"
       :data-size="shipData.size"
       class="ship">
   </div>
@@ -41,7 +41,7 @@ const shipData: ShipData = props.shipData as ShipData;
   }
 
 
-  &[data-position="horizontal"] {
+  &[data-position="1"] {
     height: var(--game-grid-cell-size);
 
     @for $i from 1 through 4 {
@@ -53,7 +53,7 @@ const shipData: ShipData = props.shipData as ShipData;
 
   }
 
-  &[data-position="vertical"] {
+  &[data-position="2"] {
     width: var(--game-grid-cell-size);
 
     @for $i from 1 through 4 {

@@ -52,7 +52,7 @@ const remainingCount = (size: number): number | null => {
 
       <div
           :class="['ship', 'default']"
-          :data-position="Position.Horizontal"
+          :data-position="Position.HORIZONTAL"
           :data-size="size"
       ></div>
 

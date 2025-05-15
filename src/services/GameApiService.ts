@@ -1,6 +1,7 @@
 import { PaginateUserGamesParams } from "@/interfaces/Paginate.ts";
 import { apiFinishGame, apiGetGames, apiStartGame } from "@/api/game.ts";
 import { PaginateUserGames } from "@/interfaces/Game.ts";
+import { GameType } from "@/enums/GameType.ts";
 
 async function getGames(data: PaginateUserGamesParams): Promise<PaginateUserGames | null> {
   const response = await apiGetGames(data);
@@ -16,8 +17,8 @@ async function startGame(roomId: string): Promise<boolean> {
   return response.status === 204;
 }
 
-async function finishGame(gameId: number): Promise<boolean> {
-  const response = await apiFinishGame(gameId);
+async function finishGame(gameId: number, type: GameType): Promise<boolean> {
+  const response = await apiFinishGame(gameId, type);
   return response.status === 204;
 }
 

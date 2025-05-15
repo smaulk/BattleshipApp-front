@@ -33,11 +33,16 @@ export interface User {
   statistic: Statistic,
 }
 
+export interface UserInfo {
+  id: number,
+  nickname: string,
+  avatarUrl: string | null,
+}
+
 export interface Statistic {
   games: number,
   wins: number,
   losses: number,
-  draws: number,
   points: number,
 }
 

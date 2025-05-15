@@ -1,29 +1,36 @@
 <script lang="ts" setup>
 import Battlefield from "components/Battlefield.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import ShipPlacementService from "@/services/ShipPlacementService.ts";
 import Ship from "components/Ship.vue";
 import BotService from "@/services/BotService.ts";
 import GameDisplayService from "@/services/GameDisplayService.ts";
 import CellCreatorService from "@/services/CellCreatorService.ts";
 import ShipsCounterService from "@/services/ShipsCounterService.ts";
-import { GameStatus } from "@/enums/GameStatus.ts";
+import { GameStatus, getGameTypeByStatus } from "@/enums/GameStatus.ts";
 import GameEndModal from "components/GameEndModal.vue";
 import { DifficultyLevel, DifficultyLevelRU } from "@/enums/DifficultyLevel.ts";
 import RivalShipsContainer from "components/RivalShipsContainer.vue";
 import { BattlefieldData } from "@/interfaces/BattlefieldData.ts";
-import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 import { ShipData } from "@/interfaces/ShipData.ts";
 import ShotService from "@/services/ShotService.ts";
-import { GameHandlerService } from "@/services/GameHandlerService.ts";
+import { BotGameHandlerService } from "@/services/BotGameHandlerService.ts";
+import { ColRowData } from "@/interfaces/ColRowData.ts";
+import { OnlineGameHandlerService } from "@/services/OnlineGameHandlerService.ts";
+import RivalService from "@/services/RivalService.ts";
+import { ShotData } from "@/interfaces/ShotData.ts";
+import { getEcho } from "@/helpers/socket.ts";
+import { finishGame } from "@/services/GameApiService.ts";
+import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 
-const { cellsArray, shipsArray, difficultyLevel } = defineProps({
-  cellsArray: Array,
-  shipsArray: Array,
-  difficultyLevel: String,
-});
-
-const emits = defineEmits(['reloadGame']);
+const { isBotGame, difficultyLevel, gameId, isFirstPlayer, cells, ships} = defineProps<{
+  isBotGame: boolean,
+  difficultyLevel: DifficultyLevel | null,
+  gameId: number | null,
+  isFirstPlayer: boolean | null,
+  cells: CellsMatrix,
+  ships: Array<ShipData>,
+}>();
 
 const selfCellElements = ref();
 const rivalCellElements = ref();
@@ -31,23 +38,16 @@ const rivalCellElements = ref();
 const battlefieldSelf = ref();
 const battlefieldRival = ref();
 
-const battlefieldData: BattlefieldData = {
-  cells: cellsArray as CellsMatrix,
-  ships: shipsArray as Array<ShipData>
-}
+const battlefieldData: BattlefieldData = { cells, ships }
 
 let shipPlacementService: ShipPlacementService;
 let gameDisplay: GameDisplayService;
-let userController: ShotService;
-let botController: BotService;
-let gameHandler: GameHandlerService;
+let gameHandler: BotGameHandlerService | OnlineGameHandlerService;
 const rivalShipsCounter: ShipsCounterService = new ShipsCounterService();
 
 onMounted(() => {
   shipPlacementService = new ShipPlacementService(new CellCreatorService(selfCellElements.value));
   shipPlacementService.placeShipsFromCells(battlefieldData);
-  userController = new ShotService(battlefieldData);
-  botController = new BotService(difficultyLevel as DifficultyLevel);
   gameDisplay = new GameDisplayService(
       rivalShipsCounter,
       new CellCreatorService(rivalCellElements.value),
@@ -55,33 +55,85 @@ onMounted(() => {
       battlefieldSelf.value,
       battlefieldRival.value
   );
-  gameHandler = new GameHandlerService(gameDisplay, userController, botController);
+
+  if(isBotGame) {
+    gameHandler = new BotGameHandlerService(gameDisplay, new ShotService(battlefieldData), new BotService(difficultyLevel));
+  } else {
+    gameHandler =  new OnlineGameHandlerService(gameDisplay, new ShotService(battlefieldData), new RivalService(gameId));
+    gameHandler.setIsUserMove(isFirstPlayer === true);
+  }
 
   rivalCellElements.value.forEach((cell: HTMLDivElement) => {
-    cell.addEventListener('click', clickEnemyCell)
+    cell.addEventListener('click', onClickRivalCell);
   })
 
 })
 
-const gameInfo = ref(GameStatus.InProgress);
+const gameStatusResult = ref(GameStatus.IN_PROGRESS);
+
+const onLeaveRival = (): void => {
+  gameStatusResult.value = GameStatus.WIN;
+}
+
+const onGetRivalMove = async (data: ColRowData): Promise<void> => {
+  const status = await (gameHandler as OnlineGameHandlerService).setShot(data);
+  if (status) onFinishGame(status);
+}
+
+const onGetRivalResult = async (data: ShotData): Promise<void> => {
+  const status = await (gameHandler as OnlineGameHandlerService).setResult(data);
+  if (status) onFinishGame(status);
+}
+
+
+const onFinishGame = (status: GameStatus) => {
+  gameStatus.value = status;
+  const gameType = getGameTypeByStatus(status);
+  if (gameType !== null && gameId) {
+    finishGame(gameId, gameType);
+  }
+}
+
+const gameStatus = ref(GameStatus.IN_PROGRESS);
+
+const onEndGame = (isEnded: boolean) => {
+  if (isEnded) {
+    gameStatusResult.value = gameStatus.value;
+  }
+}
+
+defineExpose({ onLeaveRival, onGetRivalMove, onGetRivalResult, onEndGame })
 
 /**
  * Обработка нажатия на клетку противника.
  */
-const clickEnemyCell = async (event: Event) => {
-  const info: GameStatus | null = await gameHandler.shot(event.target as HTMLDivElement);
-  if (info) gameInfo.value = info;
+const onClickRivalCell = (event: Event) => {
+  isBotGame ? onClickBotRivalCell(event) : onClickOnlineRivalCell(event);
 }
+
+const onClickOnlineRivalCell = (event: Event) => {
+  (gameHandler as OnlineGameHandlerService).sendShot(event.target as HTMLDivElement);
+}
+
+const onClickBotRivalCell = async (event: Event) => {
+  const status: GameStatus | null = await (gameHandler as BotGameHandlerService).shot(event.target as HTMLDivElement);
+  if (status) gameStatusResult.value = status;
+}
+
 
 const getRivalShipsRemainingCount = (size: number): number => {
   return rivalShipsCounter.getRemainingCount(size);
 }
 
+onUnmounted(() => {
+  getEcho().leave(`games.${gameId}`);
+})
+
 </script>
 
 <template>
   <div class="py-3 py-xxl-0">
-    <div>
+    <div v-if="isBotGame && difficultyLevel">
       <p class="h6">Уровень сложности: {{ DifficultyLevelRU[difficultyLevel as DifficultyLevel] }}</p>
     </div>
 
@@ -91,7 +143,7 @@ const getRivalShipsRemainingCount = (size: number): number => {
            class="battlefield__self battlefield__wait col-12 col-xl-6 col-xxl-5">
         <p class="h2 text-center not-highlight">Ваше поле</p>
         <Battlefield v-model:cells="selfCellElements"/>
-        <Ship v-for="ship in shipsArray as Array<ShipData>"
+        <Ship v-for="ship in ships"
               :ship-data="ship"
               class="static"
         />
@@ -108,7 +160,7 @@ const getRivalShipsRemainingCount = (size: number): number => {
         <RivalShipsContainer :get-remaining-count="getRivalShipsRemainingCount" class="col"/>
       </div>
 
-      <GameEndModal v-if="gameInfo" :game-info="gameInfo" @reload-game="emits('reloadGame')"/>
+      <GameEndModal v-if="gameStatusResult" :game-info="gameStatusResult"/>
     </div>
   </div>
 

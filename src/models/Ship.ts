@@ -51,7 +51,7 @@ export default class Ship {
     const shipElem = document.createElement('div');
     shipElem.classList.add('ship', 'static');
     shipElem.dataset.size = shipData.size.toString();
-    shipElem.dataset.position = shipData.position;
+    shipElem.dataset.position = shipData.position.toString();
     return shipElem;
   }
 
@@ -78,7 +78,7 @@ export default class Ship {
 
   /** Поменять позицию корабля */
   public changePosition() {
-    this._shipData.position = this.shipData.position === Position.Horizontal ? Position.Vertical : Position.Horizontal;
+    this._shipData.position = this.shipData.position === Position.HORIZONTAL ? Position.VERTICAL : Position.HORIZONTAL;
     this.setPositionAttr(this._shipData.position);
   }
 
@@ -135,6 +135,6 @@ export default class Ship {
 
   /** Установить данную позицию в атрибут HTML элемента корабля */
   private setPositionAttr(position: Position): void {
-    this._shipHtmlElem.dataset.position = position;
+    this._shipHtmlElem.dataset.position = position.toString();
   }
 }

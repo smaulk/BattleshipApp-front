@@ -10,14 +10,14 @@ import { ShotStatus } from "@/enums/ShotStatus.ts";
 /**
  * Переключатель игры, отвечает за ходы.
  */
-export class GameHandlerService {
+export class BotGameHandlerService {
   //Флаг, для проверки, может ли нажимать на клетку пользователь
   private isCanClick: boolean = true;
 
   constructor(
     private gameDisplayService: GameDisplayService,
     private userController: ShotService,
-    private botController: BotService
+    private botController: BotService,
   ) {
   }
 
@@ -29,11 +29,11 @@ export class GameHandlerService {
   public async shot(cellElement: HTMLDivElement): Promise<GameStatus | null> {
     if (!this.isCanClick) return null;
 
-    const userShot: boolean | null = this.takeShotUser(cellElement);
-    if (userShot === null) return null;
-    if (userShot) return this.getGameStatus();
+      const userShot: boolean | null = this.takeShotUser(cellElement);
+      if (userShot === null) return null;
+      if (userShot) return this.getGameStatus();
 
-    return await this.takeShotBot();
+      return await this.takeShotBot();
   }
 
   /**
@@ -50,7 +50,7 @@ export class GameHandlerService {
     const shotData: ShotData = this.botController.shot(cellData);
     this.gameDisplayService.shotOnRivalCell(cellData, shotData);
 
-    return !!shotData.shot;
+    return shotData.status !== ShotStatus.MISS;
   }
 
   /**
@@ -65,14 +65,14 @@ export class GameHandlerService {
     this.botController.setBotShotData(cellData, shotData);
     this.gameDisplayService.shotOnUserCell(cellData, shotData);
     //Если бот попал
-    if (shotData.shot !== ShotStatus.Miss) {
+    if (shotData.status !== ShotStatus.MISS) {
       const gameStatus = this.getGameStatus();
-      if (gameStatus !== GameStatus.InProgress) return gameStatus;
+      if (gameStatus !== GameStatus.IN_PROGRESS) return gameStatus;
 
       return this.takeShotBot();
     } else {
       this.toggleClicks(true);
-      return GameStatus.InProgress;
+      return GameStatus.IN_PROGRESS;
     }
   }
 
@@ -106,13 +106,14 @@ export class GameHandlerService {
     //Если все корабли противника уничтожены
     if (this.botController.isAllDestroyed) {
       this.toggleClicks(false)
-      return GameStatus.UserWin;
+      return GameStatus.WIN;
     }
     //Если все корабли пользователя уничтожены.
-    else if (this.userController.isAllDestroyed) {
+    if (this.userController.isAllDestroyed) {
       this.toggleClicks(false)
-      return GameStatus.RivalWin;
+      return GameStatus.LOSE;
     }
-    return GameStatus.InProgress;
+
+    return GameStatus.IN_PROGRESS;
   }
 }

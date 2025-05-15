@@ -75,7 +75,7 @@ export default class RandomCellsService extends CellsMatrixService {
    */
   private getRandomPosition(): { cellData: ColRowData, position: Position } {
     const cellData: ColRowData = getRandomColRowData();
-    const position = Math.random() > 0.5 ? Position.Horizontal : Position.Vertical;
+    const position = Math.random() > 0.5 ? Position.HORIZONTAL : Position.VERTICAL;
 
     return { cellData, position };
   }

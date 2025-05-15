@@ -151,8 +151,8 @@ function getShipEmptyCells(startCellData: ColRowData, shipData: ShipData): Array
  */
 function getNewCellData(cellData: ColRowData, position: Position, offset: number): ColRowData {
   return {
-    col: position === Position.Horizontal ? cellData.col + offset : cellData.col,
-    row: position === Position.Vertical ? cellData.row + offset : cellData.row,
+    col: position === Position.HORIZONTAL ? cellData.col + offset : cellData.col,
+    row: position === Position.VERTICAL ? cellData.row + offset : cellData.row,
   };
 }
 

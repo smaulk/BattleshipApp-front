@@ -4,29 +4,25 @@ import AppHeaderLogo from "components/AppHeaderLogo.vue";
 import AppHeaderLink from "components/AppHeaderLink.vue";
 import AppHeaderUserInfo from "components/AppHeaderUserInfo.vue";
 import { computed, ref } from "vue";
-import { logout } from "@/services/AuthService.ts";
+import { logout } from "@/services/AuthApiService.ts";
 import { useRouter } from "vue-router";
 import AppModal from "components/AppModal.vue";
 import AppModalActions from "components/AppModalActions.vue";
+import { getInteger } from "@/helpers";
 
 const router = useRouter();
 const nickname = ref<string | null>(localStorage.getItem('userNickname'))
 const modalRef = ref<typeof AppModal | null>(null);
 
-const getUserId = (userId: string | number | null): number | null => {
-  const parsed = userId !== null ? Number(userId) : null;
-  return parsed !== null && Number.isInteger(parsed) ? parsed : null
-}
-
 const storedUserId = localStorage.getItem('userId');
-const userId = ref<number | null>(getUserId(storedUserId));
+const userId = ref<number | null>(getInteger(storedUserId));
 
 const isAuth = computed(() => userId.value !== null && nickname.value !== null)
 
 // Слушатель события авторизации
 window.addEventListener('auth', (event: any): void => {
   nickname.value = event.detail.nickname;
-  userId.value = getUserId(event.detail.userId);
+  userId.value = getInteger(event.detail.userId);
 });
 
 const showModal = (): void => {
@@ -40,15 +36,19 @@ const closeModal = (): void => {
 const onLogout = async (): Promise<void> => {
   logout();
   closeModal();
-  await router.push({name: 'home'});
+  await router.push({ name: 'home' });
 }
 
 const onProfile = () => {
-  router.push({name: 'user', params: {id: userId.value}});
+  router.push({ name: 'user', params: { userId: userId.value } });
 }
 
 const onFriends = () => {
-  router.push({name: 'friends'});
+  router.push({ name: 'friends' });
+}
+
+const onGames = () => {
+  router.push({ name: 'games' });
 }
 </script>
 
@@ -75,6 +75,9 @@ const onFriends = () => {
               <AppHeaderLink @click="onFriends">Друзья</AppHeaderLink>
             </li>
             <li class="nav-item d-sm-none">
+              <AppHeaderLink @click="onGames">Игры</AppHeaderLink>
+            </li>
+            <li class="nav-item d-sm-none">
               <AppHeaderLink @click="showModal">Выход</AppHeaderLink>
             </li>
           </ul>
@@ -88,6 +91,7 @@ const onFriends = () => {
             :nickname="nickname"
             @onProfile="onProfile"
             @onFriends="onFriends"
+            @onGames="onGames"
             @onLogout="showModal"
         />
       </template>

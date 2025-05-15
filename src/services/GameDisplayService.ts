@@ -38,10 +38,10 @@ export default class GameDisplayService {
     if (!cell) return;
     this.setLastClickedCell(cell, false);
 
-    if (shotData.shot === ShotStatus.Miss) {
+    if (shotData.status === ShotStatus.MISS) {
       cell.setCellClassMiss();
       this.setBattlefieldWait(false);
-    } else if (shotData.shot === ShotStatus.Hit) {
+    } else if (shotData.status === ShotStatus.HIT) {
       cell.setCellClassHit();
     } else if (shotData.startCell && shotData.ship) {
       this.setShipDestroyed(shotData.startCell, shotData.ship, false);
@@ -58,7 +58,7 @@ export default class GameDisplayService {
     this.setLastClickedCell(cell, true);
 
     //Если не попал в корабль
-    if (shotData.shot === ShotStatus.Miss) {
+    if (shotData.status === ShotStatus.MISS) {
       cell.setCellClassMiss();
       this.setBattlefieldWait(true);
     }
@@ -66,7 +66,7 @@ export default class GameDisplayService {
     else {
       if (!shotData.ship) return;
       //Если корабль уничтожен
-      if (shotData.shot === ShotStatus.Destroyed && shotData.startCell) {
+      if (shotData.status === ShotStatus.DESTROYED && shotData.startCell) {
         const startCell = this.rivalCellCreator.create(shotData.startCell);
         if (startCell) {
           startCell.appendShip(Ship.create(shotData.ship, true));
@@ -110,7 +110,7 @@ export default class GameDisplayService {
    * @param isRival - Флаг, если true - установить ожидание противнику, false - пользователю
    * @private
    */
-  private setBattlefieldWait(isRival: boolean): void {
+  public setBattlefieldWait(isRival: boolean): void {
     (isRival ? this.battlefieldUser : this.battlefieldRival)
       .classList.remove('battlefield__wait');
     (isRival ? this.battlefieldRival : this.battlefieldUser)

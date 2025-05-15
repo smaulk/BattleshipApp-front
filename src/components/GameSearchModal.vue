@@ -6,11 +6,13 @@ import { startSearchRoom, stopSearchRoom } from "@/services/RoomApiService.ts";
 const modalRef = ref<typeof AppModal | null>(null);
 const seconds = ref<number>(0);
 let timer: number | null = null;
+let isStartedSearch = false;
 
 const show = () => {
   modalRef.value?.show();
   startSearchRoom();
   setInterval();
+  isStartedSearch = true;
 };
 
 const setInterval = () => {
@@ -32,8 +34,11 @@ const onClose = () => {
 };
 
 const beforeClose = () => {
-  stopSearchRoom();
-  resetInterval();
+  if(isStartedSearch) {
+    stopSearchRoom();
+    resetInterval();
+    isStartedSearch = false;
+  }
 }
 
 onUnmounted(() => {
@@ -88,7 +93,7 @@ $loaderSize: 100px;
 @keyframes spinAndPulse {
   0% {
     transform: rotate(0deg) scale(1);
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
   25% {
     transform: rotate(90deg) scale(1.05);
@@ -102,7 +107,7 @@ $loaderSize: 100px;
   }
   100% {
     transform: rotate(360deg) scale(1);
-    background-position: 0% 50%;
+    background-position: 0 50%;
   }
 }
 
