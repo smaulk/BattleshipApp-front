@@ -1,7 +1,10 @@
 import { GameType } from "@/enums/GameType.ts";
 
-export interface PaginateCollection<T> {
+export interface Collection<T> {
   data: T[];
+}
+
+export interface PaginateCollection<T> extends Collection<T> {
   meta: {
     lastId: number | null;
   }

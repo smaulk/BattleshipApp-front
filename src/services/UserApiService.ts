@@ -1,6 +1,14 @@
 import { CreateUserData, PaginateUsers, SelfUser, UpdateUserData, User } from "@/interfaces/User.ts";
 import NotifyService from "@/services/NotifyService.ts";
-import { apiCreateUser, apiDeleteAvatar, apiGetUser, apiGetUsers, apiUpdateAvatar, apiUpdateUser } from "@/api/user.ts";
+import {
+  apiCreateUser,
+  apiDeleteAvatar,
+  apiGetLeaderboard,
+  apiGetUser,
+  apiGetUsers,
+  apiUpdateAvatar,
+  apiUpdateUser
+} from "@/api/user.ts";
 import { emailValidation, nicknameValidation, passwordValidation } from "@/services/ValidationService.ts";
 import { refresh } from "@/services/AuthApiService.ts"
 import { PaginateUsersParams } from "@/interfaces/Paginate.ts";
@@ -77,11 +85,20 @@ async function getUser(id: number): Promise<User | SelfUser | null> {
   return null;
 }
 
+async function getLeaderboard(): Promise<Array<User> | null> {
+  const response = await apiGetLeaderboard();
+  if (response.status === 200) {
+    return response.data.data;
+  }
+  return null;
+}
+
 export {
   createUser,
   updateUser,
   updateAvatar,
   deleteAvatar,
   getUsers,
-  getUser
+  getUser,
+  getLeaderboard,
 }

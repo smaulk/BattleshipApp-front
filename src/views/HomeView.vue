@@ -7,14 +7,15 @@ import GameSearchModal from "components/GameSearchModal.vue";
 import { useLoading } from "@/composables/Loading.ts";
 import { createRoom } from "@/services/RoomApiService.ts";
 import { GameMode } from "@/enums/GameMode.ts";
+import LeaderboardList from "components/LeaderboardList.vue";
 
 const router = useRouter();
 const { unique } = useLoading();
 
-const userNickname = ref<string | null>(localStorage.getItem('userNickname'));
+const userId = ref<string | null>(localStorage.getItem('userId'));
 // Слушатель события авторизации
 window.addEventListener('auth', (event: any): void => {
-  userNickname.value = event.detail.nickname;
+  userId.value = event.detail.userId;
 });
 
 
@@ -54,15 +55,13 @@ const onFriendGame = () => {
 </script>
 
 <template>
-  <div class="d-flex flex-column align-items-center py-3 gap-4">
-    <div class="mb-2">
+  <div class="d-flex row gap-5 gap-lg-0">
+    <div class="col-12 col-lg-7 d-flex flex-column align-items-center justify-content-center py-3 gap-4">
       <p class="h1 text-center">Играть в морской бой</p>
-    </div>
 
-    <div class="col-12 d-flex flex-column">
-      <div class="d-flex align-items-center justify-content-around">
-        <div class="home-btns col-10 col-sm-8 col-lg-6 col-xl-4 d-flex flex-column align-items-center gap-3">
-          <template v-if="userNickname">
+      <div class="d-flex align-items-center justify-content-center container">
+        <div class="home-btns d-flex flex-column align-items-center gap-3 col-10 col-sm-8 col-lg-6">
+          <template v-if="userId">
             <button class="btn-u" @click="onSearchGame">Случайная игра</button>
             <button class="btn-u" @click="onFriendGame">Игра с другом</button>
             <button class="btn-u" @click="onCreateLinkGame">Игра по ссылке</button>
@@ -85,6 +84,8 @@ const onFriendGame = () => {
         </div>
       </div>
     </div>
+
+    <LeaderboardList class="col-12 col-lg-5 d-flex flex-column justify-content-center px-lg-5"/>
   </div>
 </template>
 

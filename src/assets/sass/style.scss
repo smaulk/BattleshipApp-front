@@ -44,7 +44,7 @@ body {
   pointer-events: none;
 }
 
-.important {
+.text-important {
   color: $important-color;
 }
 
@@ -242,6 +242,7 @@ body {
     }
 
     .list-item-data {
+      @extend .not-highlight;
       display: flex;
       align-items: center;
       gap: 0.75rem;

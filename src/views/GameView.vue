@@ -202,7 +202,7 @@ onUnmounted(() => {
   </div>
   <div v-else class="d-flex flex-column justify-content-center align-items-center text-center">
     <div class="message-block">
-      <h2 class="important h2">Игра недоступна!</h2>
+      <h2 class="text-important h2">Игра недоступна!</h2>
       <p class="text-muted h6">Игра закончилась или недоступна</p>
       <button class="btn btn-primary mt-3" @click="$router.push({name: 'home'})">На главную</button>
     </div>

@@ -1,4 +1,11 @@
-import { AxiosPaginateUsers, AxiosSelfUser, AxiosUser, CreateUserData, UpdateUserData } from "@/interfaces/User.ts";
+import {
+  AxiosPaginateUsers,
+  AxiosSelfUser,
+  AxiosUser,
+  AxiosUsers,
+  CreateUserData,
+  UpdateUserData
+} from "@/interfaces/User.ts";
 import { handleApiResponse } from "@/api/response.ts";
 import { request } from "@/axios.config.ts";
 import { AxiosNoContent } from "@/interfaces/AxiosResponse.ts";
@@ -35,4 +42,8 @@ export async function apiGetUsers(data: PaginateUsersParams): Promise<AxiosPagin
 
 export async function apiGetUser(id: number): Promise<AxiosUser | AxiosSelfUser> {
   return handleApiResponse<AxiosUser | AxiosSelfUser>(request.get(`/api/v1/users/${id}`));
+}
+
+export async function apiGetLeaderboard(): Promise<AxiosUsers> {
+  return handleApiResponse<AxiosUsers>(request.get('/api/v1/leaderboard'));
 }
