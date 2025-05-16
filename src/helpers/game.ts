@@ -1,5 +1,5 @@
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { gameConfig } from "@/game.config.ts";
+import { gameConfig } from "@/app.config.ts";
 import { ShipData } from "@/interfaces/ShipData.ts";
 import { Position } from "@/enums/Position.ts";
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";

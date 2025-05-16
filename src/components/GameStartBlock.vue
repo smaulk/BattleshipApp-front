@@ -6,7 +6,7 @@ import { DifficultyLevel, DifficultyLevelRU } from "@/enums/DifficultyLevel.ts";
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 import ShipsCounterService from "@/services/ShipsCounterService.ts";
 import { UserInfo } from "@/interfaces/User.ts";
-import { userAvatar } from "@/game.config.ts";
+import { userAvatar } from "@/app.config.ts";
 import { useRouter } from "vue-router";
 import Countdown from "components/Countdown.vue";
 

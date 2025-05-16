@@ -1,6 +1,6 @@
 import { ColRowData } from "@/interfaces/ColRowData.ts";
 import { ShotData } from "@/interfaces/ShotData.ts";
-import { gameConfig } from "@/game.config.ts";
+import { gameConfig } from "@/app.config.ts";
 import { getEcho } from "@/helpers/socket.ts";
 
 export default class RivalService {

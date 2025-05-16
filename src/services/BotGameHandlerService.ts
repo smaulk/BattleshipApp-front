@@ -1,7 +1,7 @@
 import { GameStatus } from "@/enums/GameStatus.ts";
 import GameDisplayService from "@/services/GameDisplayService.ts";
 import BotService from "@/services/BotService.ts";
-import { gameConfig } from "@/game.config.ts";
+import { gameConfig } from "@/app.config.ts";
 import { getColRowData, getRandomInt } from "@/helpers/game.ts";
 import ShotService from "@/services/ShotService.ts";
 import { ShotData } from "@/interfaces/ShotData.ts";

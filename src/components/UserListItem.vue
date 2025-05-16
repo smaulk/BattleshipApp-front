@@ -3,7 +3,7 @@
 import { User } from "@/interfaces/User.ts";
 import { useRouter } from "vue-router";
 import { computed } from "vue";
-import { userAvatar } from "@/game.config.ts";
+import { userAvatar } from "@/app.config.ts";
 
 const props = defineProps<{
   user: User,
@@ -19,10 +19,10 @@ const onClickUser = (userId: number) => {
 </script>
 
 <template>
-  <div class="d-flex align-items-center justify-content-between p-3 user-list-item">
-    <div class="d-flex align-items-center gap-3 user-list-item-data" @click.prevent="onClickUser(user.id)">
-      <img :src="avatar" alt="avatar" class="avatar"/>
-      <div class="text-dark">
+  <div class="list-item">
+    <div class="list-item-data" @click.prevent="onClickUser(user.id)">
+      <img :src="avatar" alt="avatar" class="list-item-data-avatar"/>
+      <div class="text-dark d-flex align-items-center">
         {{ user.nickname }}
         <span :class="['status-indicator', user.isOnline ? 'online' : 'offline']"></span>
       </div>
@@ -32,33 +32,12 @@ const onClickUser = (userId: number) => {
 </template>
 
 <style scoped lang="scss">
-.user-list-item {
-  $border: 1px solid #5e5e5e;
-  background-color: $list-item-color;
-  border: $border;
-  border-top: none;
-
-  &:first-child {
-    border-top: $border;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-  &:last-child {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-
-  .user-list-item-data {
-    cursor: pointer;
-  }
-}
-
 .status-indicator {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 3px;
+  margin-left: 5px;
 }
 
 .online {
@@ -68,32 +47,17 @@ const onClickUser = (userId: number) => {
   background-color: #6c757d;
 }
 
-.text-dark {
-  color: black;
-  font-weight: bold;
-}
-
-$avatarSize: 50px;
-
-.avatar {
-  border-radius: 25%;
-  border: 2px solid $main-color;
-  width: $avatarSize;
-  height: $avatarSize;
-  background: white;
-}
-
 .fade-scale {
   &-enter-active, &-leave-active {
-    transition: opacity 0.5s, transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
-  &-enter, &-leave-to {
+  &-enter-from, &-leave-to {
     opacity: 0;
     transform: scale(0.8);
   }
 
-  &-enter-to, &-leave {
+  &-enter-to, &-leave-from {
     opacity: 1;
     transform: scale(1);
   }

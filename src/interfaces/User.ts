@@ -19,7 +19,7 @@ export interface SelfUser {
   nickname: string,
   email: string,
   isVerified: boolean,
-  avatarUrl: string,
+  avatarUrl: string | null,
   isOnline: boolean,
   statistic: Statistic,
 }

@@ -2,7 +2,7 @@
 import { deleteAvatar, updateAvatar } from "@/services/UserApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
 import { computed, ref } from "vue";
-import { userAvatar } from "@/game.config.ts";
+import { userAvatar } from "@/app.config.ts";
 import { SelfUser, User } from "@/interfaces/User.ts";
 import AppModal from "components/AppModal.vue";
 import AppModalActions from "components/AppModalActions.vue";

@@ -15,14 +15,30 @@ export function formatRelativeTime(timestamp: number): string {
 
   const diffInHours = Math.floor(diffInMinutes / 60);
   if (diffInHours < 2) return 'час назад';
-  if (diffInHours < 5) return `${diffInHours} ч назад`;
+  if (diffInHours < 24) return `${diffInHours} ч назад`;
 
   const diffInDays = Math.floor(diffInHours / 24);
-  if (diffInDays === 0) return 'сегодня';
   if (diffInDays === 1) return 'вчера';
   if (diffInDays < 7) return `${diffInDays} дн назад`;
 
   return new Date(timestamp * 1000).toLocaleDateString();
+}
+
+/**
+ * Форматирование секунд длительности в удобном формате
+ * @param seconds
+ */
+export function formatDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+
+  const parts: string[] = [];
+  if (hours) parts.push(`${hours} ч.`);
+  if (minutes) parts.push(`${minutes} м.`);
+  if (secs || parts.length === 0) parts.push(`${secs} с.`);
+
+  return parts.join(' ');
 }
 
 /**

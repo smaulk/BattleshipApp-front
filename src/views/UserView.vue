@@ -62,7 +62,7 @@ const onEditUserPassword = () => {
         <UserAvatar :user="user" :is-self="isSelf"/>
 
         <div>
-          <p class="mb-0 h2">{{ user.nickname }}</p>
+          <p class="mb-0 h3">{{ user.nickname }}</p>
           <small :class="user.isOnline ? 'text-info' : 'text-muted'">
             {{ user.isOnline ? 'В сети' : 'Не в сети' }}
           </small>

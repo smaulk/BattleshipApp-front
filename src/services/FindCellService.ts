@@ -1,6 +1,6 @@
 import { getColRowData } from "@/helpers/game.ts";
 import { ColRowData } from "@/interfaces/ColRowData.ts";
-import { gameConfig } from "@/game.config.ts";
+import { gameConfig } from "@/app.config.ts";
 
 /**
  * Сервис, отвечающий за поиск клетки в координатах курсора.

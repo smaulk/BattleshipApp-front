@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from "vue";
-import { gameConfig } from "@/game.config.ts";
+import { gameConfig } from "@/app.config.ts";
 
 const emits = defineEmits(['update:cells'])
 

@@ -62,7 +62,7 @@ const onInviteFriend = (id: number): void => {
       Ничего не найдено
     </div>
 
-    <div v-show="items.length" class="invites-list-container" ref="itemsList">
+    <div v-show="items.length" class="list-container" ref="itemsList">
       <transition-group :name="isLoaded ? 'fade-scale' : ''" tag="div">
         <UserListItem
             v-for="user in items"
@@ -76,20 +76,4 @@ const onInviteFriend = (id: number): void => {
 </template>
 
 <style scoped lang="scss">
-.invites-list-container {
-  max-height: 65vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-.search_empty {
-  color: white;
-  display: flex;
-  justify-content: center;
-}
 </style>

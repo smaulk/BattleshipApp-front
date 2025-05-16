@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { headerLogo } from '@/game.config.ts';
+import { headerLogo } from '@/app.config.ts';
 import AppHeaderLogo from "components/AppHeaderLogo.vue";
 import AppHeaderLink from "components/AppHeaderLink.vue";
 import AppHeaderUserInfo from "components/AppHeaderUserInfo.vue";

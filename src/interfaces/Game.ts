@@ -7,8 +7,9 @@ export interface UserGame {
   type: GameType;
   rivalId: number;
   rivalNickname: string;
-  createdAt: string;
-  endedAt: string;
+  rivalAvatarUrl: string | null;
+  createdAt: number;
+  endedAt: number | null;
 }
 
 export type PaginateUserGames = PaginateCollection<UserGame>;

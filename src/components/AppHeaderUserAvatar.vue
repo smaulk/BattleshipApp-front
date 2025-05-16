@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { userAvatar } from "@/game.config.ts";
+import { userAvatar } from "@/app.config.ts";
 
 const avatarUrl = ref<string | null>(localStorage.getItem('userAvatarUrl') || null)
 
