@@ -87,16 +87,6 @@ const gameInfoMessage = computed(() => {
   &.modal-lost {
     background: linear-gradient(145deg, #f44336, #ff7961);
     box-shadow: inset 0 0 12px rgba(255, 0, 50, 0.5);
-    animation: fadeOutLost 1.5s ease;
-
-    @keyframes fadeOutLost {
-      0% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0.9;
-      }
-    }
   }
 
   .modal-content {
