@@ -69,10 +69,13 @@ onMounted(() => {
 
 })
 
-const gameStatusResult = ref(GameStatus.IN_PROGRESS);
+const gameStatusResult = ref<GameStatus>(GameStatus.IN_PROGRESS);
+const gameStatus = ref<GameStatus>(GameStatus.IN_PROGRESS);
 
 const onLeaveRival = (): void => {
-  gameStatusResult.value = GameStatus.WIN;
+  if(gameStatusResult.value === GameStatus.IN_PROGRESS) {
+    gameStatusResult.value = GameStatus.WIN;
+  }
 }
 
 const onGetRivalMove = async (data: ColRowData): Promise<void> => {
@@ -85,7 +88,6 @@ const onGetRivalResult = async (data: ShotData): Promise<void> => {
   if (status) onFinishGame(status);
 }
 
-
 const onFinishGame = (status: GameStatus) => {
   gameStatus.value = status;
   const gameType = getGameTypeByStatus(status);
@@ -93,8 +95,6 @@ const onFinishGame = (status: GameStatus) => {
     finishGame(gameId, gameType);
   }
 }
-
-const gameStatus = ref(GameStatus.IN_PROGRESS);
 
 const onEndGame = (isEnded: boolean) => {
   if (isEnded) {
@@ -117,6 +117,7 @@ const onClickOnlineRivalCell = (event: Event) => {
 
 const onClickBotRivalCell = async (event: Event) => {
   const status: GameStatus | null = await (gameHandler as BotGameHandlerService).shot(event.target as HTMLDivElement);
+  // Для бота сразу записывает в результат игры
   if (status) gameStatusResult.value = status;
 }
 
@@ -160,7 +161,7 @@ onUnmounted(() => {
         <RivalShipsContainer :get-remaining-count="getRivalShipsRemainingCount" class="col"/>
       </div>
 
-      <GameEndModal v-if="gameStatusResult" :game-info="gameStatusResult"/>
+      <GameEndModal v-if="gameStatusResult !== GameStatus.IN_PROGRESS" :game-status="gameStatusResult"/>
     </div>
   </div>
 

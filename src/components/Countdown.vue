@@ -20,7 +20,7 @@ const isFinished = computed(() => timeLeft <= 0);
 </script>
 
 <template>
-  <div class="countdown d-flex align-items-center justify-content-center"
+  <div class="countdown d-flex align-items-center justify-content-center not-highlight"
        :class="{ critical: isCritical, finished: isFinished }">
     <div class="time-display">
       <span class="time">{{ formattedTime }}</span>

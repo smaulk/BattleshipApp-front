@@ -55,12 +55,12 @@ const onFriendGame = () => {
 </script>
 
 <template>
-  <div class="d-flex row gap-5 gap-lg-0">
-    <div class="col-12 col-lg-7 d-flex flex-column align-items-center justify-content-center py-3 gap-4">
+  <div class="d-flex row gap-5 gap-xl-0 justify-content-center mx-0">
+    <div class="col-12 col-md-7 col-lg-6 col-xl-7 d-flex flex-column align-items-center justify-content-center gap-4">
       <p class="h1 text-center">Играть в морской бой</p>
 
       <div class="d-flex align-items-center justify-content-center container">
-        <div class="home-btns d-flex flex-column align-items-center gap-3 col-10 col-sm-8 col-lg-6">
+        <div class="home-btns d-flex flex-column align-items-center gap-3 col-10 col-xl-6">
           <template v-if="userId">
             <button class="btn-u" @click="onSearchGame">Случайная игра</button>
             <button class="btn-u" @click="onFriendGame">Игра с другом</button>
@@ -86,7 +86,7 @@ const onFriendGame = () => {
       </div>
     </div>
 
-    <LeaderboardList class="col-12 col-lg-5 d-flex flex-column justify-content-center px-lg-5"/>
+    <LeaderboardList class="col-12 col-sm-10 col-md-8 col-xl-5 d-flex flex-column justify-content-center px-lg-5"/>
   </div>
 </template>
 

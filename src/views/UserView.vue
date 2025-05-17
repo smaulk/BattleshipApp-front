@@ -57,10 +57,12 @@ const onEditUserPassword = () => {
   <div v-if="user" class="user-page p-4">
     <UserVerifyEmailInfoBlock v-if="isSelf && !(user as SelfUser).isVerified"/>
 
-    <div class="user-info-block d-flex justify-content-between align-items-center mb-4">
+    <div
+        class="user-info-block mb-4 gap-3 gap-md-0
+          d-flex flex-column flex-md-row justify-content-md-between align-items-md-center"
+    >
       <div class="d-flex align-items-center gap-3">
         <UserAvatar :user="user" :is-self="isSelf"/>
-
         <div>
           <p class="mb-0 h3">{{ user.nickname }}</p>
           <small :class="user.isOnline ? 'text-info' : 'text-muted'">
@@ -69,11 +71,11 @@ const onEditUserPassword = () => {
         </div>
       </div>
 
-      <div v-if="isSelf" class="ms-5 d-flex flex-column gap-3">
-        <button @click="onEditUserData" class="btn btn-warning btn-sm w-100">
+      <div v-if="isSelf" class="ms-md-5 d-flex flex-column flex-sm-row flex-md-column gap-3">
+        <button @click="onEditUserData" class="btn btn-warning w-100">
           Изменить данные
         </button>
-        <button @click="onEditUserPassword" class="btn btn-primary btn-sm w-100">
+        <button @click="onEditUserPassword" class="btn btn-primary w-100">
           Сменить пароль
         </button>
 
@@ -105,4 +107,6 @@ const onEditUserPassword = () => {
   padding: 20px;
   border-radius: 10px;
 }
+
+
 </style>

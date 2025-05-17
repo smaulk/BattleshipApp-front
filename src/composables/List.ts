@@ -66,7 +66,7 @@ export function useList<T = User>({ itemsGetter }: Params<T>): Return<T> {
         if(loaded.meta.lastId !== null) {
           lastItemId.value = loaded.meta.lastId;
         }
-        addItems(loaded.data)
+        addItems(loaded.data);
       }
     }
     inLoad = false;

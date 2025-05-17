@@ -37,5 +37,6 @@ defineProps<{
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 12px;
+  font-size: 1.2rem;
 }
 </style>

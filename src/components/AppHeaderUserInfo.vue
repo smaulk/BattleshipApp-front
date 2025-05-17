@@ -20,7 +20,7 @@ defineEmits<{
       </h1>
     </div>
 
-    <ul class="dropdown-menu dropdown-menu-end" role="menu">
+    <ul class="dropdown-menu dropdown-menu-end menu" role="menu">
       <li role="menuitem">
         <button class="button menu-button" @click="$emit('onProfile')">Профиль</button>
       </li>
@@ -39,7 +39,6 @@ defineEmits<{
 
 <style scoped lang="scss">
 .header-user {
-
   .user-info {
     gap: 0.9375rem; // 15px
     cursor: pointer;
@@ -63,20 +62,25 @@ defineEmits<{
     padding: 0 8px;
   }
 
-  .menu-button {
-    width: 100%;
-    border-radius: 5px;
-    font-size: calc($font-size-header / 1.2);
-    padding: 5px 0;
-    transition: all 0.2s;
-    color: $third-color;
-    background-color: white;
+  .menu {
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    right: 0.625rem;
 
-    &:hover {
-      background-color: $header-second-color;
-      color: $header-main-color;
+    .menu-button {
+      width: 100%;
+      border-radius: 5px;
+      font-size: calc($font-size-header / 1.2);
+      padding: 5px 0;
+      transition: all 0.2s;
+      color: $third-color;
+      background-color: white;
+
+      &:hover {
+        background-color: $header-second-color;
+        color: $header-main-color;
+      }
     }
   }
 }
-
 </style>

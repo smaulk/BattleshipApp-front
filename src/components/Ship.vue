@@ -13,13 +13,12 @@ const shipData: ShipData = props.shipData as ShipData;
       :data-id="shipData.id"
       :data-position="shipData.position.toString()"
       :data-size="shipData.size"
-      class="ship">
+      class="ship draggable">
   </div>
 </template>
 
 <style lang="scss">
 .ship {
-  cursor: move;
   touch-action: none;
   position: absolute;
   background-size: contain;
@@ -64,16 +63,36 @@ const shipData: ShipData = props.shipData as ShipData;
     }
 
   }
-
-}
-
-.dragging {
-  z-index: 1001 !important;
 }
 
 .ship-place-forbidden {
   border: 3px solid red !important;
   background-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+.draggable {
+  cursor: grab;
+
+  &.dragging {
+    z-index: 1001 !important;
+    animation: drag 0.6s ease-in-out infinite;
+    cursor: grabbing;
+  }
+}
+
+@keyframes drag {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes shake {

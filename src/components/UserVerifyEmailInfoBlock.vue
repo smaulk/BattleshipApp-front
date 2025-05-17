@@ -19,7 +19,7 @@ const sendVerificationEmail = () => {
       Пожалуйста, подтвердите вашу почту!
     </div>
     <div class="d-flex gap-2">
-      <button class="btn btn-primary btn-sm" @click="sendVerificationEmail">
+      <button class="btn btn-primary btn-sm btn-compact" @click="sendVerificationEmail">
         Отправить письмо
       </button>
       <button class="btn-close" aria-label="Закрыть" @click="hideVerifyAlert = true"></button>
@@ -28,5 +28,9 @@ const sendVerificationEmail = () => {
 </template>
 
 <style scoped lang="scss">
-
+.btn-compact {
+  line-height: 1.1;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 </style>

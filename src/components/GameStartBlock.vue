@@ -49,18 +49,26 @@ const onClickUser = (userId: number) => {
 </script>
 
 <template>
-  <div class="row row-cols-1 row-cols-xl-2 d-flex justify-content-center justify-content-xl-between py-3">
+  <div class="row row-cols-1 row-cols-xl-2 d-flex justify-content-center justify-content-xl-between py-3 gap-4 gap-lg-5 gap-xl-0">
     <div class=
              "col-10 col-xl-4 d-flex flex-column flex-lg-row flex-xl-column
              align-items-center align-items-lg-start align-items-xl-center justify-content-center gap-xl-2"
     >
-      <template v-if="!isBotGame">
-        <Countdown :time-left="roomTtl" />
-        <div v-if="rival" class="d-flex justify-content-center align-items-center gap-4 mb-5 rival-block">
+      <div v-if="isBotGame" class="text-center">
+        <p class="h2">Игра с ботом</p>
+        <p v-if="difficultyLevel" class="h6 text-info">
+          Уровень сложности: {{ DifficultyLevelRU[difficultyLevel as DifficultyLevel] }}
+        </p>
+      </div>
+
+      <div v-else>
+        <Countdown :time-left="roomTtl"/>
+        <div v-if="rival"
+             class="d-flex justify-content-center align-items-center gap-4 mb-3 mb-lg-0 mb-xl-5 rival-block not-highlight">
           <span class="h6">Противник</span>
           <div class="d-flex align-items-center gap-3 rival-data" @click.prevent="onClickUser(rival.id)">
             <img :src="avatar" alt="avatar" class="avatar"/>
-            <div class="h7">
+            <div>
               {{ rival.nickname }}
             </div>
           </div>
@@ -69,20 +77,18 @@ const onClickUser = (userId: number) => {
         <div v-else class="h7 loading-anim">
           Ожидание подключения противника...
         </div>
-      </template>
-
-
-      <div class="d-flex flex-column  col-12 col-sm-10 col-lg-6 col-xl-12 gap-1 gap-xl-3 text-center ">
-        <p class="h1">Разместите корабли</p>
-        <p v-if="difficultyLevel" class="h6">
-          Уровень сложности: {{ DifficultyLevelRU[difficultyLevel as DifficultyLevel] }}
-        </p>
       </div>
+
+
+
+
       <div class=
                "col-12 col-sm-10 col-lg-6 col-xl-12 d-flex flex-column
-               align-items-center gap-1 gap-xl-3 start-block"
+               align-items-center start-block"
       >
-        <div class="col-10 col-sm-8 col-xl-9">
+        <p class="h2">Разместите корабли</p>
+
+        <div class="col-10 col-sm-8 col-xl-9 mb-2 mb-xl-3">
           <button
               class="btn-u btn-start-game"
               @click="startGameClick"
@@ -92,24 +98,23 @@ const onClickUser = (userId: number) => {
           </button>
         </div>
 
-        <p v-if="isAllPlaced === false" class="start-block-alert">
+        <p v-if="isAllPlaced === false" class="text-important h6 mb-0">
           Для начала игры разместите все корабли!
         </p>
 
-        <p v-if="isStartingGame" class="text-warning loading-anim">
+        <p v-if="isStartingGame" class="text-warning loading-anim h7 mb-0">
           Ожидание противника...
         </p>
       </div>
     </div>
+
     <ShipPlacementBlock
         :cellsArray="cells"
         :ship-counter="shipCounter"
         :shipsArray="ships"
         class="col-12 col-xl-8"
     />
-
   </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -118,38 +123,41 @@ const onClickUser = (userId: number) => {
   font-size: calc(1.1rem + 0.5vw);
 }
 
-.start-block {
-  height: 100px;
-
-  .start-block-alert {
-    margin: 0;
-    padding: 0;
-    color: $important-color;
-    font-size: calc(0.9rem + 0.5vw);
-  }
-
-}
+$rival-bg: lighten($background-color, 10%);
+$rival-hover: darken($rival-bg, 3%);
+$avatar-size: 60px;
 
 .rival-block {
-  padding: 10px 20px;
-  background-color: lighten($background-color, 10%);
-  border-radius: 10px;
+  padding: 12px 24px;
+  background-color: $rival-bg;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: scale(1.03);
+    background-color: $rival-hover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
 
   .rival-data {
     cursor: pointer;
+    font-size: 1.4rem;
+    transition: color 0.2s;
+
+    &:hover {
+      transform: scale(1.03);
+    }
   }
 }
 
-
-
-$avatarSize: 60px;
-
 .avatar {
   border-radius: 25%;
-  border: 2px solid $main-color;
-  width: $avatarSize;
-  height: $avatarSize;
+  border: 3px solid $main-color;
+  width: $avatar-size;
+  height: $avatar-size;
   background: white;
+  transition: transform 0.2s;
 }
 
 </style>

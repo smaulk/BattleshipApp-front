@@ -53,7 +53,7 @@ const onGames = () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-sm not-highlight">
+  <nav class="navbar navbar-expand-md not-highlight">
     <div class="container-fluid">
       <AppHeaderLogo
           class="navbar-brand"
@@ -68,23 +68,23 @@ const onGames = () => {
       <template v-if="isAuth">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mx-auto">
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-md-none">
               <AppHeaderLink @click="onProfile">Профиль</AppHeaderLink>
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-md-none">
               <AppHeaderLink @click="onFriends">Друзья</AppHeaderLink>
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-md-none">
               <AppHeaderLink @click="onGames">Игры</AppHeaderLink>
             </li>
-            <li class="nav-item d-sm-none">
+            <li class="nav-item d-md-none">
               <AppHeaderLink @click="showModal">Выход</AppHeaderLink>
             </li>
           </ul>
         </div>
 
         <AppHeaderUserInfo
-            class="d-none d-sm-block"
+            class="d-none d-md-block"
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
