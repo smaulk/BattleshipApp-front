@@ -4,11 +4,13 @@ import { UserListTabs } from "@/enums/UserListTabs.ts";
 import { User } from "@/interfaces/User.ts";
 import { acceptFriendship, createFriendship, deleteFriendship } from "@/services/FriendshipApiService.ts";
 import { useLoading } from "@/composables/Loading.ts";
+import { computed } from "vue";
 
 const props = defineProps<{
   user: User,
   tabType?: UserListTabs | null,
   removeItem?: ((user: User) => void) | null,
+  isNormalSize?: boolean,
 }>();
 
 const { unique } = useLoading();
@@ -61,25 +63,27 @@ const changeFriendshipType = (user: User, type: FriendshipType | null) => {
     props.removeItem(user);
   }
 }
+
+const btnListClass = computed(() => props.isNormalSize ? '' : 'btn-sm');
 </script>
 
 <template>
-  <div class="d-flex gap-2 user-list-item-buttons">
+  <div class="d-flex gap-2">
     <template v-if="isFriend(user.friendshipType)">
-      <button class="btn btn-danger btn-sm" @click="remove(user)">Удалить</button>
+      <button :class="['btn','btn-danger', btnListClass]" @click="remove(user)">Удалить</button>
     </template>
 
     <template v-else-if="isIncoming(user.friendshipType)">
-      <button class="btn btn-success btn-sm" @click="accept(user)">Принять</button>
-      <button class="btn btn-outline-secondary btn-sm" @click="remove(user)">Отклонить</button>
+      <button :class="['btn','btn-success', btnListClass]" @click="accept(user)">Принять</button>
+      <button :class="['btn','btn-outline-secondary', btnListClass]" @click="remove(user)">Отклонить</button>
     </template>
 
     <template v-else-if="isOutgoing(user.friendshipType)">
-      <button class="btn btn-warning btn-sm" @click="remove(user)">Отменить</button>
+      <button :class="['btn','btn-warning', btnListClass]" @click="remove(user)">Отменить</button>
     </template>
 
     <template v-else-if="isNotFriendship(user.friendshipType)">
-      <button class="btn btn-primary btn-sm" @click="add(user)">Добавить</button>
+      <button :class="['btn','btn-primary', btnListClass]" @click="add(user)">Добавить</button>
     </template>
   </div>
 </template>

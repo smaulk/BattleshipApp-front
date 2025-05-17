@@ -9,11 +9,13 @@ import { UserInfo } from "@/interfaces/User.ts";
 import { userAvatar } from "@/app.config.ts";
 import { useRouter } from "vue-router";
 import Countdown from "components/Countdown.vue";
+import NotifyService from "@/services/NotifyService.ts";
 
 const router = useRouter();
 
 const props = defineProps<{
   isBotGame: boolean,
+  isLinkMode: boolean,
   difficultyLevel: DifficultyLevel | null,
   rival: UserInfo | null,
   startGame: (cells: CellsMatrix, ships: Array<ShipData>) => Promise<boolean>,
@@ -46,6 +48,16 @@ const onClickUser = (userId: number) => {
   const url = router.resolve({ name: 'user', params: { userId: String(userId) } }).href;
   window.open(url, '_blank');
 }
+
+const onCopyUrl = () => {
+  const url = window.location.href
+  navigator.clipboard.writeText(url)
+      .then(() => {
+        NotifyService.success('Ссылка скопирована в буфер обмена!');
+      }).catch(() => {
+        NotifyService.error('Ошибка при копировании ссылки');
+      })
+}
 </script>
 
 <template>
@@ -61,7 +73,10 @@ const onClickUser = (userId: number) => {
         </p>
       </div>
 
-      <div v-else>
+      <div v-else class="d-flex flex-column">
+        <button v-if="isLinkMode" class="mb-3 btn btn-light" @click="onCopyUrl">
+          Скопировать ссылку
+        </button>
         <Countdown :time-left="roomTtl"/>
         <div v-if="rival"
              class="d-flex justify-content-center align-items-center gap-4 mb-3 mb-lg-0 mb-xl-5 rival-block not-highlight">
@@ -78,9 +93,6 @@ const onClickUser = (userId: number) => {
           Ожидание подключения противника...
         </div>
       </div>
-
-
-
 
       <div class=
                "col-12 col-sm-10 col-lg-6 col-xl-12 d-flex flex-column
@@ -159,5 +171,4 @@ $avatar-size: 60px;
   background: white;
   transition: transform 0.2s;
 }
-
 </style>

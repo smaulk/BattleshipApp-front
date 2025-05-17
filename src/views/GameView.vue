@@ -49,7 +49,7 @@ const getDifficultyLevel = () => {
 const isAvailable = ref<boolean>(isBotMode.value || isRoomMode.value);
 
 onMounted(async () => {
-  window.addEventListener('beforeunload', updateAlert);
+  setGameMode(true);
 
   if (isRoomMode.value && roomId) {
     const roomTtl = await joinRoom(roomId);
@@ -176,8 +176,17 @@ onUnmounted(() => {
   if (roomId) {
     leaveChannelRoom(roomId);
   }
-  window.removeEventListener('beforeunload', updateAlert);
+  setGameMode(false);
 });
+
+const setGameMode = (isGameMode: boolean): void => {
+  window.removeEventListener('beforeunload', updateAlert);
+  if (isGameMode) {
+    window.addEventListener('beforeunload', updateAlert);
+  }
+
+  NotifyService.setIsGameMode(isGameMode);
+}
 
 </script>
 
@@ -194,6 +203,7 @@ onUnmounted(() => {
     />
     <GameStartBlock v-else
                     :is-bot-game="isBotMode"
+                    :is-link-mode="gameMode == GameMode.LINK"
                     :rival="rivalInfo"
                     :difficulty-level="difficultyLevel"
                     :start-game="onStartGame"

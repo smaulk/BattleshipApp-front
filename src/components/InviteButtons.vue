@@ -32,7 +32,7 @@ const remove = (invite: UserInvite) => {
 </script>
 
 <template>
-  <div class="d-flex flex-column flex-sm-row gap-2 user-list-item-buttons">
+  <div class="d-flex flex-column flex-sm-row gap-2">
     <template v-if="tabType === InviteListTabs.Incoming">
       <button class="btn btn-success btn-sm" @click="accept(invite)">Принять</button>
       <button class="btn btn-outline-secondary btn-sm" @click="remove(invite)">Отклонить</button>

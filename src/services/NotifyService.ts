@@ -5,6 +5,13 @@ import { acceptInvite, deleteInvite } from "@/services/InviteApiService.ts";
 
 export default class NotifyService {
 
+  // Устанавливает игровой режим
+  private static isGameMode: boolean = false;
+
+  static setIsGameMode(isGameMode: boolean): void {
+    this.isGameMode = isGameMode;
+  }
+
   /**
    * Уведомление об ошибке
    * @param text текст ошибки
@@ -66,10 +73,15 @@ export default class NotifyService {
 
   /**
    * Уведомление о приглашении в игру
+   * Не видны в режиме игры
    * @param message
    * @param senderId
    */
   static gameInvite(message: string, senderId: number): void {
+    if (this.isGameMode) {
+      return;
+    }
+
     Notify.send({
       title: 'Приглашение в игру',
       text: message,

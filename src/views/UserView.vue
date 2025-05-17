@@ -71,7 +71,7 @@ const onEditUserPassword = () => {
         </div>
       </div>
 
-      <div v-if="isSelf" class="ms-md-5 d-flex flex-column flex-sm-row flex-md-column gap-3">
+      <div v-if="isSelf" class="d-flex flex-column flex-sm-row flex-md-column gap-3">
         <button @click="onEditUserData" class="btn btn-warning w-100">
           Изменить данные
         </button>
@@ -83,9 +83,9 @@ const onEditUserPassword = () => {
         <UserEditPasswordModal ref="userEditPasswordModalRef"/>
       </div>
 
-      <div v-else-if="(user as User)?.friendshipType !== undefined" class="ms-5 d-flex flex-column align-items-end">
-        <p class="h7">{{ getFriendshipDesc((user as User).friendshipType) }}</p>
-        <FriendshipButtons :user="user as User"/>
+      <div v-else-if="(user as User)?.friendshipType !== undefined" class="d-flex flex-column align-items-md-end">
+        <p class="friendship-label">{{ getFriendshipDesc((user as User).friendshipType) }}</p>
+        <FriendshipButtons :user="user as User" :is-normal-size="true"/>
       </div>
     </div>
 
@@ -100,13 +100,16 @@ const onEditUserPassword = () => {
 <style scoped lang="scss">
 .user-page {
   max-width: 750px;
+
+  .user-info-block {
+    background-color: $second-color;
+    padding: 20px;
+    border-radius: 10px;
+
+    .friendship-label {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+  }
 }
-
-.user-info-block {
-  background-color: $second-color;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-
 </style>
