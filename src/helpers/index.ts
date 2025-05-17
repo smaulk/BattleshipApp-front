@@ -49,3 +49,45 @@ export function getInteger(number: string | number | null): number | null {
   const parsed = number !== null ? Number(number) : null;
   return parsed !== null && Number.isInteger(parsed) ? parsed : null
 }
+
+/**
+ * Копирует url страницы в буфер обмена
+ */
+export async function copyUrl(): Promise<boolean> {
+  const url = window.location.href;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    try {
+      await navigator.clipboard.writeText(url);
+      return true;
+    } catch {
+      return fallbackCopy(url);
+    }
+  }
+
+  return fallbackCopy(url);
+}
+
+/**
+ * Копирует текст с помощью создания элемента textarea
+ * @param text
+ */
+function fallbackCopy(text: string): boolean {
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.style.position = 'fixed';
+  textarea.style.opacity = '0';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  let success;
+  try {
+    success = document.execCommand('copy');
+  } catch {
+    success = false;
+  }
+
+  document.body.removeChild(textarea);
+  return success;
+}

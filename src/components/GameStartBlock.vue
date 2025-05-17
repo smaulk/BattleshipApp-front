@@ -10,6 +10,7 @@ import { userAvatar } from "@/app.config.ts";
 import { useRouter } from "vue-router";
 import Countdown from "components/Countdown.vue";
 import NotifyService from "@/services/NotifyService.ts";
+import { copyUrl } from "@/helpers";
 
 const router = useRouter();
 
@@ -49,15 +50,14 @@ const onClickUser = (userId: number) => {
   window.open(url, '_blank');
 }
 
-const onCopyUrl = () => {
-  const url = window.location.href
-  navigator.clipboard.writeText(url)
-      .then(() => {
-        NotifyService.success('Ссылка скопирована в буфер обмена!');
-      }).catch(() => {
-        NotifyService.error('Ошибка при копировании ссылки');
-      })
+const onCopyUrl = async () => {
+  if (await copyUrl()) {
+    NotifyService.success('Ссылка скопирована в буфер обмена!');
+  } else {
+    NotifyService.error('Ошибка при копировании ссылки');
+  }
 }
+
 </script>
 
 <template>
