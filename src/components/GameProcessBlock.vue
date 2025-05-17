@@ -133,13 +133,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="py-3 py-xxl-0">
-    <div v-if="isBotGame && difficultyLevel">
+  <div class="pb-3 pb-xl-0">
+    <div v-if="isBotGame && difficultyLevel" class="mb-xl-3">
       <p class="h6">Уровень сложности: {{ DifficultyLevelRU[difficultyLevel as DifficultyLevel] }}</p>
     </div>
 
     <div class="d-flex justify-content-center row gap-4 gap-xl-0">
-
       <div ref="battlefieldSelf"
            class="battlefield__self battlefield__wait col-12 col-xl-6 col-xxl-5">
         <p class="h2 text-center not-highlight">Ваше поле</p>
