@@ -16,7 +16,7 @@ const avatar = computed(() => game.rivalAvatarUrl || userAvatar)
 
 const createdAt = computed(() => formatRelativeTime(game.createdAt));
 const formatedDuration = computed(() => game.endedAt
-    ? 'Длительность: '  + formatDuration(game.endedAt - game.createdAt)
+    ? formatDuration(game.endedAt - game.createdAt)
     : 'Не завершена'
 );
 
