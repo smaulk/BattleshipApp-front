@@ -231,6 +231,10 @@ body {
     padding: 1rem;
     margin-bottom: 0.7rem;
 
+    &:last-child {
+      margin-bottom: 0;
+    }
+
     background-color: $list-item-color;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
