@@ -137,7 +137,7 @@ const onCopyUrl = async () => {
 
 $rival-bg: lighten($background-color, 10%);
 $rival-hover: darken($rival-bg, 3%);
-$avatar-size: 60px;
+$avatar-size: calc(3rem + 0.8vw);
 
 .rival-block {
   padding: 12px 24px;
