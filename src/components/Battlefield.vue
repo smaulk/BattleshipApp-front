@@ -59,7 +59,7 @@ $box-shadow-cell: 0 0 1px calc(var(--game-grid-cell-size) / 75) black;
     box-shadow: $box-shadow-cell;
 
     .ship {
-      z-index: 1000;
+      z-index: 998;
     }
 
   }
@@ -132,7 +132,7 @@ $box-shadow-cell: 0 0 1px calc(var(--game-grid-cell-size) / 75) black;
 
   .battlefield-cell__hit, .battlefield-cell__destroyed {
     .symbol {
-      z-index: 1001;
+      z-index: 999;
       position: absolute; /* Абсолютное позиционирование внутри клетки */
       top: 50%; /* Расположение креста по вертикали */
       left: 50%; /* Расположение креста по горизонтали */

@@ -74,7 +74,7 @@ const shipData: ShipData = props.shipData as ShipData;
   cursor: grab;
 
   &.dragging {
-    z-index: 1001 !important;
+    z-index: 999 !important;
     animation: drag 0.6s ease-in-out infinite;
     cursor: grabbing;
   }
