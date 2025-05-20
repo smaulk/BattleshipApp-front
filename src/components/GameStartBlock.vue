@@ -89,7 +89,7 @@ const onCopyUrl = async () => {
           </div>
         </div>
 
-        <div v-else class="h7 loading-anim">
+        <div v-else class="text-center h7 loading-anim">
           Ожидание подключения противника...
         </div>
       </div>
@@ -110,11 +110,11 @@ const onCopyUrl = async () => {
           </button>
         </div>
 
-        <p v-if="isAllPlaced === false" class="text-important h6 mb-0">
+        <p v-if="isAllPlaced === false" class="text-center text-important h6 mb-0">
           Для начала игры разместите все корабли!
         </p>
 
-        <p v-if="isStartingGame" class="text-warning loading-anim h7 mb-0">
+        <p v-if="isStartingGame" class="text-center text-warning loading-anim h7 mb-0">
           Ожидание противника...
         </p>
       </div>
