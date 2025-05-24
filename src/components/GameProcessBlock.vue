@@ -23,10 +23,11 @@ import { getEcho } from "@/helpers/socket.ts";
 import { finishGame } from "@/services/GameApiService.ts";
 import { CellsMatrix } from "@/interfaces/CellsMatrix.ts";
 
-const { isBotGame, difficultyLevel, gameId, isFirstPlayer, cells, ships} = defineProps<{
+const { isBotGame, difficultyLevel, gameId, userId, isFirstPlayer, cells, ships} = defineProps<{
   isBotGame: boolean,
   difficultyLevel: DifficultyLevel | null,
   gameId: number | null,
+  userId: number | null,
   isFirstPlayer: boolean | null,
   cells: CellsMatrix,
   ships: Array<ShipData>,
@@ -59,7 +60,7 @@ onMounted(() => {
   if(isBotGame) {
     gameHandler = new BotGameHandlerService(gameDisplay, new ShotService(battlefieldData), new BotService(difficultyLevel));
   } else {
-    gameHandler =  new OnlineGameHandlerService(gameDisplay, new ShotService(battlefieldData), new RivalService(gameId));
+    gameHandler =  new OnlineGameHandlerService(gameDisplay, new ShotService(battlefieldData), new RivalService(gameId, userId));
     gameHandler.setIsUserMove(isFirstPlayer === true);
   }
 

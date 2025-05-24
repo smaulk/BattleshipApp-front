@@ -150,8 +150,9 @@ const startGameplay = () => {
 const connectChannelGame = (gameId: number): void => {
   getEcho()
       .join(`games.${gameId}`)
-      .listenForWhisper('game.move.data', (data: ColRowData) => {
-        gameProcessRef.value?.onGetRivalMove(data);
+      .listenForWhisper('game.move.data', (data: {userId: number, cell: ColRowData}) => {
+        if(data.userId == userId.value) return;
+        gameProcessRef.value?.onGetRivalMove(data.cell);
       })
       .listenForWhisper('game.move.result', (data: ShotData) => {
         gameProcessRef.value?.onGetRivalResult(data);
@@ -197,6 +198,7 @@ const setGameMode = (isGameMode: boolean): void => {
                       :is-bot-game="isBotMode"
                       :difficulty-level="difficultyLevel"
                       :game-id="gameId"
+                      :user-id="userId"
                       :is-first-player="isFirstPlayer"
                       :cells="cellsArray"
                       :ships="shipsArray"
