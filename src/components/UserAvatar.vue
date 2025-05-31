@@ -78,11 +78,11 @@ const removeAvatar = () => {
 </template>
 
 <style scoped lang="scss">
-$avatarSize: 100px;
 .avatar-wrapper {
   position: relative;
-  width: $avatarSize;
-  height: $avatarSize;
+  min-width: 80px;
+  max-width: 100px;
+  aspect-ratio: 1 / 1;
 
   &:hover .avatar-overlay {
     opacity: 1;

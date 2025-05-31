@@ -20,13 +20,11 @@ const avatar = computed(() => avatarUrl.value || userAvatar)
 </template>
 
 <style scoped lang="scss">
-$avatarSize: 60px;
-
 .avatar {
   border-radius: 25%;
   border: 2px solid $main-color;
-  width: $avatarSize;
-  height: $avatarSize;
+  width: 60px;
+  aspect-ratio: 1 / 1;
   background: white;
 }
 </style>

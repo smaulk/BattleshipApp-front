@@ -67,7 +67,7 @@ const onFriendGame = () => {
             <button class="btn-u" @click="onCreateLinkGame">Игра по ссылке</button>
           </template>
           <button class="btn-u" @click="showBotGameModal">Игра с ботом</button>
-          <p v-if="!userId" class="text-warning h7">Онлайн режимы игры доступны после авторизации</p>
+          <p v-if="!userId" class="text-warning text-center h7">Онлайн режимы игры доступны после авторизации</p>
 
           <AppModal ref="botGameModalRef">
             <p class="h4 mb-4 text-center">Выберите уровень сложности</p>
