@@ -58,7 +58,7 @@ const onEditUserPassword = () => {
     <UserVerifyEmailInfoBlock v-if="isSelf && !(user as SelfUser).isVerified"/>
 
     <div
-        class="user-info-block mb-4 gap-3 gap-md-0
+        class="user-info-block py-3 px-2 px-sm-3 mb-4 gap-3 gap-md-0
           d-flex flex-column flex-md-row justify-content-md-between align-items-md-center"
     >
       <div class="d-flex align-items-center gap-3">
@@ -103,7 +103,6 @@ const onEditUserPassword = () => {
 
   .user-info-block {
     background-color: $second-color;
-    padding: 20px;
     border-radius: 10px;
 
     .friendship-label {
