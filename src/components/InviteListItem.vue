@@ -28,8 +28,10 @@ const onClickUser = (userId: number) => {
   <div class="list-item">
     <div class="list-item-data" @click.prevent="onClickUser(invite.friendId)">
       <img :src="avatar" alt="avatar" class="list-item-data-avatar"/>
-      <div class="d-flex flex-column justify-content-center">
-        <span class="text-dark">{{ invite.nickname }}</span>
+      <div class="d-flex flex-column justify-content-center overflow-hidden">
+        <div class="list-item-data-content text-dark">
+          <span class="list-item-data-text">{{ invite.nickname }}</span>
+        </div>
         <span class="text-muted">{{ invitedDate }}</span>
       </div>
     </div>

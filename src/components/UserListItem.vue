@@ -22,8 +22,8 @@ const onClickUser = (userId: number) => {
   <div class="list-item">
     <div class="list-item-data" @click.prevent="onClickUser(user.id)">
       <img :src="avatar" alt="avatar" class="list-item-data-avatar"/>
-      <div class="text-dark d-flex align-items-center">
-        {{ user.nickname }}
+      <div class="list-item-data-content text-dark">
+        <span class="list-item-data-text">{{ user.nickname }}</span>
         <span :class="['status-indicator', user.isOnline ? 'online' : 'offline']"></span>
       </div>
     </div>
@@ -36,8 +36,8 @@ const onClickUser = (userId: number) => {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  display: inline-block;
   margin-left: 5px;
+  flex-shrink: 0;
 }
 
 .online {

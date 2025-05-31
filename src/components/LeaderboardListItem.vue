@@ -24,9 +24,11 @@ const onClickUser = (userId: number) => {
     <div class="list-item-data" @click.prevent="onClickUser(user.id)">
       <span class="text-dark">{{ number }}.</span>
       <img :src="avatar" alt="avatar" class="list-item-data-avatar"/>
-      <span class="text-dark font-weight-bold">{{ user.nickname }}</span>
+      <div class="list-item-data-content text-dark font-weight-bold">
+        <span class="list-item-data-text">{{ user.nickname }}</span>
+      </div>
     </div>
-    <div class="text-dark h7">
+    <div class="stats-block text-dark h7">
       <span class="text-success" title="Победы">{{ user.statistic.wins }}</span> /
       <span class="text-danger" title="Поражения">{{ user.statistic.losses }}</span> /
       <span class="text-warning" title="Очки">{{ user.statistic.points }}</span>
@@ -35,4 +37,8 @@ const onClickUser = (userId: number) => {
 </template>
 
 <style scoped lang="scss">
+.stats-block {
+  display: flex;
+  gap: 0.2rem;
+}
 </style>

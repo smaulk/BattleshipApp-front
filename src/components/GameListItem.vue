@@ -40,12 +40,14 @@ const gameStatusColor = computed(() => {
   <div class="list-item">
     <div class="list-item-data" @click.prevent="onClickUser(game.rivalId)">
       <img :src="avatar" alt="avatar" class="list-item-data-avatar" />
-      <div class="d-flex flex-column justify-content-center">
-        <span class="text-dark font-weight-bold">{{ game.rivalNickname }}</span>
+      <div class="d-flex flex-column justify-content-center overflow-hidden">
+        <div class="list-item-data-content text-dark">
+          <span class="list-item-data-text font-weight-bold">{{ game.rivalNickname }}</span>
+        </div>
         <span class="text-muted">{{ createdAt }}</span>
       </div>
     </div>
-    <div class="d-flex flex-column justify-content-center text-end ms-auto">
+    <div class="game-info-block">
       <span :class="gameStatusColor">{{ GameTypeRU[game.type] }}</span>
       <span class="text-muted">{{ formatedDuration }}</span>
     </div>
@@ -53,4 +55,10 @@ const gameStatusColor = computed(() => {
 </template>
 
 <style scoped lang="scss">
+.game-info-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: end;
+}
 </style>

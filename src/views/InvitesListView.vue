@@ -24,15 +24,14 @@ const changeTab = (tab: InviteListTabs): void => {
 
 <template>
   <div class="container invites-page py-5">
-    <div class="row">
-
-      <div class="col-12 col-lg-5 mb-4 mb-lg-0 px-5">
+    <div class="row px-1 px-lg-0">
+      <div class="col-12 col-lg-5 mb-4 mb-lg-0 px-lg-5">
         <h1 class="h2 mb-4">Друзья в сети</h1>
         <AppSearchInput v-model="query"/>
         <OnlineFriendsList :query="query"/>
       </div>
 
-      <div class="col-12 col-lg-7 px-5">
+      <div class="col-12 col-lg-7 px-lg-5">
         <AppListTabs :active-tab="activeTab" :tabs="tabs" :change-tab="changeTab"/>
         <InviteList :type="activeTab"/>
       </div>
